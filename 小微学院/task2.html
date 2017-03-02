@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>task0002</title>
+	<style type="text/css">
+		.backImg{
+			width: 400px;
+			height: 266px;
+			background-image: url(image/eg_tulip.jpg);
+			background-repeat: no-repeat;
+		}
+		.card{
+			background-color: white;
+			border: 2px inset #ddd;
+			margin:20px 10px;
+		}
+		.card .child1{
+			margin: 10px;
+		}
+		.feildlabel{
+			display: inline-block;
+			width: 200px;
+			text-align: right;
+		}
+		.feild{
+			width: 50%;
+			margin-left: 25%;
+			margin-bottom:5px;
+		}
+		.prompt{
+			margin-left: 200px;
+			font-size: 14px;
+            font-family: cursive;
+            margin-bottom: 10px;
+            margin-top: 10px;
+		}
+		.submit{
+			width: 100%;
+			color: white;
+			background-color: #4545e8;
+			padding: 5px;
+			border-radius:10px;
+		}
+	</style>
+</head>
+<body style="background-color: #ddd;">
+	<div class="card">
+		<div class="child1">
+			<h2>
+				文档一级标题
+			</h2>
+			<h3>
+				文章二级标题
+			</h3>
+			<h5>
+				文章作者&nbsp;&nbsp;文章发表时间
+			</h5>
+			<span>这是一个很长很长的段落，&nbsp;&ensp;&emsp;&thinsp;&zwnj;&zwj; 很长很长的段落       </span>
+			<p>这是一个<strong>很长很长</strong>的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，</br>这是一个很长很长的段落，<a href="#" ="">这是一个很长很长的段落，</a>这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，</p>
+			<img src="image/eg_tulip.jpg"  alt="上海鲜花港 - 郁金香" />
+			<div class="backImg"></div>
+			<p>这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，</br>这是一个很长很长的段落，<a href="#" ="">这是一个很长很长的段落，</a>这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，</p>
+		</div>
+	</div>
+	<div class="card">
+		<div class="child1">
+			<h2>
+				文档一级标题
+			</h2>
+			<h3>
+				文章二级标题
+			</h3>
+			<h5>
+				文章作者&nbsp;&nbsp;文章发表时间
+			</h5>
+			<table border="1" style="border-spacing:0px;width: 100%;border-color: #eee;">
+				<tr style="background-color: #564f4f;">
+					<th>
+						表头
+					</th>
+					<th>
+						表头
+					</th>
+					<th>
+						表头
+					</th>
+				</tr>
+				<tr>
+					<td>
+						表内容单元格
+					</td>
+					<td>
+						表内容单元格
+					</td>
+					<td>
+						<a>操作</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						表内容单元格
+					</td>
+					<td>
+						表内容单元格
+					</td>
+					<td>
+						<a>操作</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						表内容单元格
+					</td>
+					<td>
+						表内容单元格
+					</td>
+					<td>
+						<a>操作</a>
+					</td>
+				</tr>
+				<tr style="background-color: #ddd;">
+					<td>
+						总计
+					</td>
+					<td colspan="2"> <!-- rowspan="2" -->
+						1000
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="card">
+		<div class="child1">
+			<h3>
+				这里以后是一个侧栏，这是侧栏的标题
+			</h3>
+			<div>
+				<div class="feild">
+					<label class="feildlabel">请输入邮箱地址：</label>
+					<input type="" name="" value="这是一个文本框">
+					<div class="prompt">
+						<span>邮箱地址请按要求格式填写</span>
+					</div>
+				</div>
+				<div class="feild">
+					<label class="feildlabel"> 请输入密码：</label>
+					<input type="password" name="">
+				</div>
+				<div class="feild">
+					<label class="feildlabel"> 请重复输入密码：</label>
+					<input type="password" name="">
+					<div class="prompt">
+						<span>密码请为6-12位英文</span>
+					</div>
+				</div>
+				<div class="feild">
+					<label class="feildlabel"> 性别：</label>
+					<span>
+						<label>
+						<span class="radio-inner"></span>
+						<input name="sex" type="radio" value="" />男
+						</label>
+						<label>
+						<span class="radio-inner"></span>
+						<input name="sex" type="radio" value="" />女
+						</label>
+					</span>
+				</div>
+				<div class="feild">
+					<label class="feildlabel"> 爱好：</label>
+					<span>
+						<label><span class="checkbox-inner"></span>
+						<input name="hobby" type="checkbox" value="" />运动
+						</label>
+						<label>
+						<label><span class="checkbox-inner"></span><input name="hobby" type="checkbox" value="" />艺术</label>
+						<label><label><span class="checkbox-inner"></span>
+						<input name="hobby" type="checkbox" value="" />科学</label>
+					</span>
+				</div>
+				<div class="feild">
+					<label class="feildlabel"> 个人描述：</label>
+					<textarea>这是一个多行输入框</textarea>
+				</div>
+				<button class="submit">提交</button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

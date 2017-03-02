@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>task0002</title>
+	<style type="text/css">
+		#newspaper{
+			width: 980px;
+			height: 1386px;
+			margin: auto;
+			border:1px solid #ddd;
+		}
+		.content{
+			margin: auto;
+			width:892px;
+			height: 61px;
+		}
+		.title{
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-end;
+			border-bottom: 2px solid #938e8c;
+			font-size: 12px;
+			color: #ffffff;
+			font-family: 黑体;
+		}
+		.logo{
+			width:110px;
+			height: 61px;
+			background-color: #d45d5c;
+		}
+		.card1{
+			display: flex;
+			justify-content: space-between;
+			width:892px;
+			height: 61px;
+			margin-top:40px;
+		}
+		.img{
+			width:641px;
+			height: 301px;
+		}
+		.about{
+			width:203px;
+			height: 301px;
+		}
+		.pic{
+			float: left;
+			width: 100%;
+			height: 100%;
+		}
+		.left{
+			width: 191px;
+			height: 301px;
+			float: left;
+			background-color: rgba(0, 128, 0, 0.45);
+			margin-left: -100%;
+		}
+		.right{
+			width: 191px;
+			height: 301px;
+			float: right;
+			background-color:rgba(212, 93, 92, 0.48);
+			margin-left: -191px;
+		}
+		.about{
+			border-top: 2px solid #cc8091;
+		}
+		.p1{
+			font-size: 24px;
+			color: #000000;
+			font-family: 微软雅黑;
+			text-transform: capitalize;
+			text-decoration: underline;
+			line-height:40px;
+			/*margin:40px 0px; */
+			margin: 0px;
+		}
+		.p1:first-letter {
+			font-size: 36px;
+		}
+		.p2{
+			font-size: 12px;
+			color: #676767;
+			font-family: 楷体;
+			line-height:10px;
+			/*margin:10px 0px; */
+			margin: 0px;
+		}
+		.p3{
+			font-size: 116px;
+			color: #75b86b;
+			font-family: 微软雅黑;
+			text-decoration: underline;
+			font-style: oblique;
+			margin: 0;
+		}
+		.p4{
+			font-size: 55px;
+			color: #cc8091;
+			font-family: 微软雅黑;
+			margin: 0px;
+			display: inline-block;
+		}
+		.p5{
+			font-size: 21px;
+			color: #cc8091;
+			font-family: 微软雅黑;
+			margin: 0px;
+		}
+		.p6{
+			font-size: 12px;
+			color: #cc8091;
+			font-family: 微软雅黑;
+			margin: 0px;
+		}
+		.w{
+			display: inline-flex;
+		}
+		h1{
+			font-size: 16px;
+			font-family: 微软雅黑;
+			text-decoration:underline;
+			font-weight: bold;
+		}
+		.article{
+			font-size: 12px;
+			color: #231815;
+			font-family: 微软雅黑;
+			line-height:16px;
+			filter:alpha(opacity=50)；/*IE*/
+			moz-opacity:0.5; /*Firefox私有*/
+			opacity: 0.7;/*其他*/
+		}
+		.article span{
+			font-size: 12px;
+			color: #cd4a48;
+			font-family: 微软雅黑;
+			line-height:16px;
+			opacity: 0.7;/*其他*/
+			font-style: oblique;
+		}
+		.card2{
+			display: flex;
+			margin-top: 460px;
+		}
+		.card2L{
+			flex: 1;
+		}
+		.card2R{
+			flex: 1;
+			margin-left: 10px;
+			margin-top: 10px;
+		}
+		.p7{
+			font-size: 12px;
+			color: #767777;
+			font-family: 宋体;
+			line-height: 16px;
+			opacity: 0.5;
+		}
+		.p7:first-letter{
+			font-size: 70px;
+			color: #f5e327;
+			font-family: 微软雅黑;
+			float: left;/*首字下沉效果*/
+			line-height: 70px;
+		}
+		.imgWithTitle{
+			position: relative;
+			width: 458px;
+			height: 275px;
+
+		}
+		.imgTitle{
+			width: 100%;
+			height: 100%
+		}
+		.card2R_1{
+			position: absolute;
+			left: 0px;
+			bottom: 0px;
+			width: 100%;
+			height: 61px;
+			background-color: black;
+			opacity: 0.53;
+			/*text-align: center;*/
+
+		}
+		.titlex{
+			height: 44px;
+			width: 300px;
+			position: relative;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+			border-left: 3px solid green;
+		}
+		.title1{
+			font-size: 26px;
+			color: #ffffff;
+			font-family: 微软雅黑；
+		}
+		.title2{
+			font-size: 12px;
+			color: #72b16a;
+			font-family: 微软雅黑;
+			font-style:oblique;
+			letter-spacing: 140%;
+		}
+		.card2R_2{
+			width: 419px;
+			height: 318px;
+			background-color: #eee;
+			padding: 20px;
+		}
+		.card2R_2 p{
+			color: #5a5b5b;
+			font-family: 宋体;
+			line-height: 20px;
+		}
+		.card2R_2 .front{
+			font-size: 16px;
+			/*height:20px;*/
+			float: left;
+		}
+		.card2R_2 .end{
+			font-size: 12px;
+			/*height:20px;*/
+			float: right;
+		}
+		.card2R_3{
+			width: 260px;
+			height: 160px;
+			background-color: #cd4a48;
+			float: left;
+			display: flex;
+			align-items: center;
+			color: #ffffff !important;
+		}
+		.o {
+			flex: 1;
+			height: 86px;
+			border-right: 2px solid #ffffff;
+		}
+		.o .h1{
+			font-size: 110px;
+			color: #ffffff;
+			font-family: 微软雅黑;
+			margin-top: -30px;
+		}
+		.remark{
+			margin-left: 10px;
+		}
+		.num{
+			font-size: 21px;
+			font-family: 黑体;
+			font-style: oblique;
+			line-height: 24px;
+			color: #ffffff !important;
+			margin-bottom: 0px;
+			margin-top: 0px;
+		}
+		.hi{
+			font-size: 12px;
+			font-family: 黑体;
+			line-height: 6px;
+			color: #ffffff !important;
+			margin-bottom: 0px;
+			margin-top: 0px;
+		}
+		.signl{
+			color: #cd4a48;
+			font-size: 40px;
+			position: relative;
+			top: 20px;
+		}
+		.signr{
+			color: #cd4a48;
+			font-size: 40px;
+			position: relative;
+			top: 20px;
+		}
+		.footer{
+			height: 63px;
+			border-top: 1px solid #938e8c;
+			margin-top: 30px;
+
+		}
+	</style>
+</head>
+<body>
+	<div id="newspaper">
+		<div class="content">
+			<div class="title">
+				<div class="logo"><p style="margin-top: 45px;">ife.baidu.com</p></div>
+				<div style="color: #d45d5c;">2016.3</div>
+			</div>
+			<div class="card1">
+				<div class="img">
+					<div  class="pic"><img style="width: 100%;height:100%;" src="image/eg_tulip.jpg"></div>
+					<div class="left"></div>
+					<div class="right"></div>
+					<div class="w">
+						<div class="What" style="flex: 1;">
+							<h1 style="color: #418c59;">
+								What
+							</h1>
+							<div class="article">
+								前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端
+							</div>
+						</div>
+						<div class="When" style="flex: 1;">
+							<h1 style="color: #d2994f;">
+								When
+							</h1>
+							<div class="article">
+								前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端
+							</div>
+						</div>
+						<div class="How" style="flex: 1;">
+							<h1 style="color: #cc7680;">
+								How
+							</h1>
+							<div class="article">
+								前端前端前端前</br>端前端前端前端前端前端前端前端前端前端前端前端前
+								<div style="margin-top: 25px;">
+									<p>what------<span>40%</span></p>
+									<p>what------<span>30%</span></p>
+									<p>what------<span>30%</span></p>
+								</div>
+							</div>
+						</div>	
+					</div>
+				</div>
+				<div class="about">
+					<p class="p1">ABOUNT</p>
+					<p class="p1">TECHNOLOGY</p>
+					<p class="p2">About technology   about technology   about technology</p>
+					<p class="p3">700</p>
+					<div>
+						<p class="p4">3.2</p>
+						<div style="display: inline-block;">
+							<p class="p5">css</p>
+							<p class="p6">cssxccsscxs</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card2">
+				<div class="card2L">
+					<div style="font-weight: bold;font-family: 黑体;border-bottom:2px solid #11456b;">
+						<span style="font-style: italic;font-size: 72px;color: #f5e327;">THE</span><span style="line-height: 16px;font-size: 42px;color: #11456b;padding-left: 20px;">TECHNOLOGE OF FRONT</span></br><span style=" font-size: 33px;color: #11456b;">前端技术领域</span>
+					</div>
+					<div class="p7">
+						<p>前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前<img src ="image/eg_tulip.jpg" align ="right" style="width: 200px;height: 300px;"> 端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端端前端前端前端前端前端。</p ><p style="text-indent: 2em; margin-top: -8px;">前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前。</p>
+					</div>
+				</div>
+				<div class="card2R">
+					<div class="imgWithTitle">
+						<img src="image/eg_tulip.jpg" class="imgTitle">
+						<div class="card2R_1">
+							<div class="titlex">
+								<span class="title1">前端技术</span>
+								<span class="title2">前端技术前端技术</span>
+							</div>
+						</div>
+					</div>
+					<div>
+						<div class="card2R_2">
+							<p>
+								<span class="front">前端前端前端前端前端前端</span>.........................
+								<span class="end">前端</span>
+							</p>
+							<p>
+								<span class="front">前端前端前端前端前端前端</span>.......................
+								<span class="end">前端前</span>
+							</p>
+							<p>
+								<span class="front">前端前端前端前端前</span>...............................
+								<span class="end">前端</span>
+							</p>
+							<div>
+								<div class="card2R_3">
+									<div class="o">
+										<div class="h1">0</div>
+									</div>
+									<div class="remark">
+										<p class="num">ONE TWO THREE FOUR FIVE</p>
+										<p class="hi">hello word hello word hello  hello </p>
+									</div>
+								</div>
+								<p>
+									<span class="signl">“</span>
+									hello word hello word hello word hello word hello word hello word hello
+									<span class="signr">”</span>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer">
+				<span style="color: #d45d5c;float: right;">ife.baidu.com</span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

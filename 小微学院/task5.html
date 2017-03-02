@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>task0002</title>
+	<style type="text/css">
+		.backImg{
+			width: 400px;
+			height: 266px;
+			background-image: url(image/eg_tulip.jpg);
+			background-repeat: no-repeat;
+		}
+		.card{
+			background-color: white;
+			border: 2px inset #ddd;
+			margin:20px 10px;
+		}
+		.card .child1{
+			margin: 10px;
+		}
+		.feildlabel{
+			display: inline-block;
+			width: 130px;
+			text-align: right;
+		}
+		.feild{
+			margin-bottom:5px;
+		}
+		.prompt{
+			margin-left: 130px;
+			font-size: 14px;
+			font-family: cursive;
+			margin-bottom: 10px;
+			margin-top: 10px;
+		}
+		.submit{
+			width: 100%;
+			color: white;
+			background-color: #4545e8;
+			padding: 5px;
+			border-radius:10px;
+		}
+		.header{
+			position: fixed;
+			width: 100%;
+			height: 50px;
+			background-color: black;
+			top:0px;
+			left: 0px;
+			color: white;
+			z-index:1;
+		}
+		.header ul{
+			text-align: right;
+			margin: 10px 30px;
+		}
+		.header li{
+			display: inline;
+		}
+		/*法二*/
+/*		.header li{
+         display: block;
+         float: left;
+     }*/
+     .logo{
+     	display: inline-block;
+     	width: 50%
+     }
+     .footer{
+     	width: 100%;
+     	height: 50px;
+     	background-color: black;
+     	position:absolute;
+     	left: 0px;
+     	color: white;
+     }
+     .content{
+     	display: flex;
+     }
+   /*法一 float*/
+     #four{
+     	background-color: red;
+     	width:100%;
+     	height: 100%;
+     	overflow: hidden;
+     }
+     .box41{
+     	float:left;
+     	background-color: blue;
+     	border: 1px solid black;
+     	width: 100px;
+     	height: 100px;
+     	margin: 10px 10px 10px 10px;
+     }
+    /*法二 flexBox
+      1）容器属性：flex-direction--排列方式 flex-wrap--是否多列 flex-flow--前两个综合  justify-content--水平对齐方式（居中等） align-items--垂直对齐方式（居中等） align-content--多轴对齐方式
+      2）项目属性：order--排列顺序 flex-grow--放大 flex-shrink--缩小 flex-basis--length flex--放大、缩小、length align-self--自己的排列方式
+    */
+     #four{
+     	display: flex;
+     	flex-flow: row wrap;
+     	background-color: red;
+     	width:100%;
+     	height: 100%;
+     }
+     .box41{
+     	background-color: blue;
+     	border: 1px solid black;
+     	width: 100px;
+     	height: 100px;
+     	margin: 10px 10px 10px 10px;
+     }
+ </style>
+</head>
+<body style="background-color: #ddd;">
+	<div class="header">
+		<div class="logo"> 百度</div>
+		<div style="display: inline-block;width:45%;margin-left:40px;">
+			<ul>
+				<li>导航链接一</li>
+				<li>导航链接二</li>
+				<li>导航链接三</li>
+				<li>导航链接四</li>
+			</ul>
+		</div>
+	</div>
+	<div class="content">
+		<div style="width: calc(100% - 400px - 20px);">
+			<div class="card" style="margin-top: 50px;">
+				<div class="child1">
+					<h2>
+						文档一级标题
+					</h2>
+					<h3>
+						文章二级标题
+					</h3>
+					<h5>
+						文章作者&nbsp;&nbsp;文章发表时间
+					</h5>
+					<span>这是一个很长很长的段落，&nbsp;&ensp;&emsp;&thinsp;&zwnj;&zwj; 很长很长的段落       </span>
+					<p>这是一个<strong>很长很长</strong>的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，</br>这是一个很长很长的段落，<a href="#" ="">这是一个很长很长的段落，</a>这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，</p>
+					<img src="image/eg_tulip.jpg"  alt="上海鲜花港 - 郁金香" />
+					<div class="backImg"></div>
+					<p>这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，</br>这是一个很长很长的段落，<a href="#" ="">这是一个很长很长的段落，</a>这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，这是一个很长很长的段落，</p>
+				</div>
+			</div>
+			<div class="card">
+				<div class="child1">
+					<h2>
+						文档一级标题
+					</h2>
+					<h3>
+						文章二级标题
+					</h3>
+					<h5>
+						文章作者&nbsp;&nbsp;文章发表时间
+					</h5>
+					<table border="1" style="border-spacing:0px;width: 100%;border-color: #eee;">
+						<tr style="background-color: #564f4f;">
+							<th>
+								表头
+							</th>
+							<th>
+								表头
+							</th>
+							<th>
+								表头
+							</th>
+						</tr>
+						<tr>
+							<td>
+								表内容单元格
+							</td>
+							<td>
+								表内容单元格
+							</td>
+							<td>
+								<a>操作</a>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								表内容单元格
+							</td>
+							<td>
+								表内容单元格
+							</td>
+							<td>
+								<a>操作</a>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								表内容单元格
+							</td>
+							<td>
+								表内容单元格
+							</td>
+							<td>
+								<a>操作</a>
+							</td>
+						</tr>
+						<tr style="background-color: #ddd;">
+							<td>
+								总计
+							</td>
+							<td colspan="2"> <!-- rowspan="2" -->
+								1000
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="card">
+				<div id="four">
+					<div class="box41">
+					</div>
+					<div class="box41">
+					</div>
+					<div class="box41">
+					</div>
+					<div class="box41">
+					</div>
+					<div class="box41">
+					</div>
+					<div class="box41">
+					</div>
+					<div class="box41">
+					</div>
+					<div class="box41">
+					</div>
+					<div class="box41">
+					</div>
+					<div class="box41">
+					</div>
+					<div class="box41">
+					</div>
+					<div class="box41">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card" style="width: 400px;height: 400px;margin: 50px 10px;">
+			<div class="child1">
+				<h3>
+					这里以后是一个侧栏，这是侧栏的标题
+				</h3>
+				<div>
+					<div class="feild">
+						<label class="feildlabel">请输入邮箱地址：</label>
+						<input type="" name="" value="这是一个文本框">
+						<div class="prompt">
+							<span>邮箱地址请按要求格式填写</span>
+						</div>
+					</div>
+					<div class="feild">
+						<label class="feildlabel"> 请输入密码：</label>
+						<input type="password" name="">
+					</div>
+					<div class="feild">
+						<label class="feildlabel"> 请重复输入密码：</label>
+						<input type="password" name="">
+						<div class="prompt">
+							<span>密码请为6-12位英文</span>
+						</div>
+					</div>
+					<div class="feild">
+						<label class="feildlabel"> 性别：</label>
+						<span>
+							<label>
+								<span class="radio-inner"></span>
+								<input name="sex" type="radio" value="" />男
+							</label>
+							<label>
+								<span class="radio-inner"></span>
+								<input name="sex" type="radio" value="" />女
+							</label>
+						</span>
+					</div>
+					<div class="feild">
+						<label class="feildlabel"> 爱好：</label>
+						<span>
+							<label><span class="checkbox-inner"></span>
+								<input name="hobby" type="checkbox" value="" />运动
+							</label>
+							<label>
+								<label><span class="checkbox-inner"></span><input name="hobby" type="checkbox" value="" />艺术</label>
+								<label><label><span class="checkbox-inner"></span>
+									<input name="hobby" type="checkbox" value="" />科学</label>
+								</span>
+							</div>
+							<div class="feild">
+								<label class="feildlabel"> 个人描述：</label>
+								<textarea>这是一个多行输入框</textarea>
+							</div>
+							<button class="submit">提交</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer"style="width: 100%;text-align: center;">
+				<div style="width: 100%;text-align: center;margin-top: 10px">版权所有@</div>
+			</div>
+		</body>
+		</html>

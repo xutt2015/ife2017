@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>task</title>
+	<style type="text/css">
+		body{
+			background-color: white;
+		}
+		#window{
+			display: none;
+			position: fixed;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			/*display: flex;*/
+			justify-content: center;
+			align-items: center;
+			background-color: rgba(0, 0, 0, 0.33);
+			z-index: 1;
+		}
+		.dialog{
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			height: 400px;
+			width: 400px;
+		}
+		.title{
+			display: flex;
+			height: 30px;
+			justify-content: space-between;
+			align-items: flex-end;
+			color: white;
+			background-color: #20a0ff;
+			border-radius: 5px;
+		}
+		#close{
+			width: 20px;
+			height: 20px;
+		    /*border: 1px solid #ddd;
+		    border-radius: 10px;*/
+		    text-align: center;
+		}
+		.btn{
+			text-align: center;
+		}
+		.content{
+			height: 370px;
+		}
+	</style>
+</head>
+<body> 
+	<button id="start"> 点击显示模态框</button>
+	<div id="window" >
+		<div class="dialog">
+			<div class="title">
+				<div>对话框标题</div>
+				<div id="close">X</div>
+			</div>
+			<div style="background-color: white;">
+				<div class="content">对话框内容</div>
+				<div class="btn">
+					<button>确定</button>
+					<button>取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		document.getElementById("start").addEventListener("click", showDialog, false);
+		document.getElementById("close").addEventListener("click", hideDialog, false);
+		function showDialog() {
+			var ui = document.getElementById("window");
+			ui.style.display="flex";
+		}
+		function hideDialog() {
+			var ui = document.getElementById("window");
+			ui.style.display="none";
+		}
+	</script>
+</body>
+</html>
