@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>task0002</title>
+	<title>task0006</title>
 	<style type="text/css">
 		#newspaper{
 			width: 980px;
@@ -281,6 +281,24 @@
 			position: relative;
 			top: 20px;
 		}
+		/*方法二：通过伪类添加标签再设置标签样式*/
+		/*.pseudoClass:before{
+			content: "“";
+			line-height:20px;
+			position: relative;
+			top: 20px;
+		}
+		.pseudoClass:after{
+			content: "”";
+			line-height:20px;
+			position: relative;
+			top: 20px;
+		}
+		.pseudoClass:before,.pseudoClass:after{
+			color: #cd4a48;
+			font-size: 40px;
+		}*/
+
 		.footer{
 			height: 63px;
 			border-top: 1px solid #938e8c;
@@ -390,9 +408,9 @@
 										<p class="hi">hello word hello word hello  hello </p>
 									</div>
 								</div>
-								<p>
+								<p class="pseudoClass">
 									<span class="signl">“</span>
-									hello word hello word hello word hello word hello word hello word hello
+									 hello word hello word hello word hello word hello word hello word hello 
 									<span class="signr">”</span>
 								</p>
 							</div>
