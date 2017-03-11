@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>IFE JavaScript Task 06</title>
+  <style type="text/css">
+    #numList li{
+      display: inline-block;
+      padding: 5px 10px;
+      background-color: red;
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <textarea id="textarea"></textarea>
+    <button id="leftEnter">左侧入</button>
+    <button id="rightEnter">右侧入</button>
+    <button id="leftOut">左侧出</button>
+    <button id="rightOut">右测出</button>
+  </div>
+  <div>
+    <input id="searchInput" type="text">
+    <button id="searchBtn">查询</button>
+  </div>
+  <div>
+    <ul id="numList" style="list-style-type:none;">
+    </ul>
+  </div>
+  <script type="text/javascript" src="js/lib.js"></script>
+  <script type="text/javascript">
+    $=function (id){
+      return document.getElementById(id);
+    }
+
+  //通过特殊字符对值进行拆分
+  function ValueSplit(value){
+    var arr=value.split(/[\r\n,，、\s\f]/g);
+    return arr;
+  }
+
+  //左侧入
+  function leftEnter(){
+    var arr;
+    if ($("textarea").value!='') {
+      arr=ValueSplit($("textarea").value)
+    }
+    if(arr){
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i]!="") {
+          var li=document.createElement("li");
+          var value=document.createTextNode(arr[i]);
+          li.appendChild(value);
+          $("numList").insertBefore(li,$("numList").firstChild);
+        }
+      }
+    }
+  }
+  addEvent($("leftEnter"),"click",leftEnter);
+  //右侧入
+  function rightEnter(){
+    var arr;
+    if ($("textarea").value!='') {
+      arr=ValueSplit($("textarea").value)
+    }
+    if(arr){
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i]!="") {
+          var li=document.createElement("li");
+          var value=document.createTextNode(arr[i]);
+          li.appendChild(value);
+          $("numList").appendChild(li);
+        }
+      }
+    }
+  }
+  addEvent($("rightEnter"),"click",rightEnter);
+  //左侧出
+  function leftOut(){
+    $("numList").removeChild($("numList").firstChild);
+  }
+  addEvent($("leftOut"),"click",leftOut);
+  //右侧出
+  function rightOut(){
+    $("numList").removeChild($("numList").lastChild);
+  }
+  addEvent($("rightOut"),"click",rightOut);
+
+//代理的方式绑定liClick事件
+(function liClick(){
+  addEvent($("numList"),"click",function(event){
+    if (event.target&&event.target.nodeName.toLowerCase()=="li") {
+      $("numList").removeChild(event.target);
+    }
+  })
+})();
+//按关键字查询
+function keySearch(){
+  var text=$("searchInput").value;
+  var li=$("numList").getElementsByTagName("li");
+  for (var i = 0; i < li.length; i++) {
+    if (li[i].innerText.indexOf(text)!=-1) {
+       li[i].style.color="blue";
+    }
+    else{
+      li[i].style.color="";
+    }
+  }
+}
+addEvent($("searchBtn"),"click",keySearch);
+
+</script>
+</body>
+</html>

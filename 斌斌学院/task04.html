@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>IFE JavaScript Task 04</title>
+  <style type="text/css">
+    #numList li{
+      display: inline-block;
+      padding: 5px 10px;
+      background-color: red;
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <input id="input" type="text">
+    <button id="leftEnter">左侧入</button>
+    <button id="rightEnter">右侧入</button>
+    <button id="leftOut">左侧出</button>
+    <button id="rightOut">右测出</button>
+  </div>
+  <div>
+    <ul id="numList" style="list-style-type:none;">
+   </ul>
+ </div>
+ <script type="text/javascript" src="js/lib.js"></script>
+ <script type="text/javascript">
+  $=function (id){
+    return document.getElementById(id);
+  }
+
+  //判断值是否为数字
+  function isNum(value){
+    console.log(isNaN(value));//不能判断空串或空格
+    console.log(!parseFloat(value).toString=="NaN");
+    var re=/^\d+.?\d*$/;
+    if (re.test(value)) {
+      return true;
+    }
+    else{
+      alert("请输入一个数字");
+      return false;
+    }
+  }
+
+  //左侧入
+  function leftEnter(){
+    if(isNum($("input").value)){
+      var li=document.createElement("li");
+      var value=document.createTextNode($("input").value);
+      li.appendChild(value);
+      $("numList").insertBefore(li,$("numList").firstChild);
+    }
+  }
+  addEvent($("leftEnter"),"click",leftEnter);
+  //右侧入
+  function rightEnter(){
+    if(isNum($("input").value)){
+      var li=document.createElement("li");
+      var value=document.createTextNode($("input").value);
+      li.appendChild(value);
+      $("numList").appendChild(li);
+    }
+  }
+  addEvent($("rightEnter"),"click",rightEnter);
+  //左侧出
+  function leftOut(){
+    $("numList").removeChild($("numList").firstChild);
+  }
+  addEvent($("leftOut"),"click",leftOut);
+  //右侧出
+  function rightOut(){
+    $("numList").removeChild($("numList").lastChild);
+  }
+  addEvent($("rightOut"),"click",rightOut);
+
+//代理的方式绑定liClick事件
+(function liClick(){
+  addEvent($("numList"),"click",function(event){
+    if (event.target&&event.target.nodeName.toLowerCase()=="li") {
+      $("numList").removeChild(event.target);
+    }
+  })
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>IFE JavaScript Task 05</title>
+  <style type="text/css">
+    #numList {
+      list-style-type: none;
+      height: 130px;
+      display: flex;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+    #numList li{
+      display: inline-block;
+      padding: 5px 5px;
+      background-color: red;
+      margin-left: 5px;
+      width: 10px;
+    }
+    #newNumList{
+      list-style-type: none;
+      height: 130px;
+      display: flex;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+    #newNumList li{
+      display: inline-block;
+      padding: 5px 5px;
+      background-color: red;
+      margin-left: 5px;
+      width: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <input id="input" type="text">
+    <button id="leftEnter">左侧入</button>
+    <button id="rightEnter">右侧入</button>
+    <button id="leftOut">左侧出</button>
+    <button id="rightOut">右侧出</button>
+    <button id="sort">排序</button>
+  </div>
+  <div>
+    <ul id="numList">
+    </ul>
+  </div>
+    <div>
+    <ul id="newNumList">
+    </ul>
+  </div>
+  <script type="text/javascript" src="js/lib.js"></script>
+  <script type="text/javascript">
+    $=function (id){
+      return document.getElementById(id);
+    }
+
+  //判断值是否为10-100数字
+  function isNum(value){
+    console.log(isNaN(value));//不能判断空串或空格
+    console.log(!parseFloat(value).toString=="NaN");
+    var re=/^\d+.?\d*$/;
+    if (re.test(value)) {
+      if (value>=10&&value<=100) {
+       return true;
+     }
+     else{
+      alert("请输入一个10-100的数字");
+    }
+  }
+  else{
+    alert("请输入一个数字");
+    return false;
+  }
+}
+
+  //左侧入
+  function leftEnter(){
+    if ( $("numList").getElementsByTagName("li").length<60) {
+      if(isNum($("input").value)){
+        var li=document.createElement("li");
+        li.style.height=$("input").value+"px";//勿忘px
+        $("numList").insertBefore(li,$("numList").firstChild);
+      }
+    }
+    else{
+      alert("队列个数超过60，不能添加！");
+    }
+  }
+  addEvent($("leftEnter"),"click",leftEnter);
+  //右侧入
+  function rightEnter(){
+    if ( $("numList").getElementsByTagName("li").length<60) {
+      if(isNum($("input").value)){
+        var li=document.createElement("li");
+        li.style.height=$("input").value+"px";
+        $("numList").appendChild(li);
+      }
+    }
+    else{
+      alert("队列个数超过60，不能添加！");
+    }
+  }
+  addEvent($("rightEnter"),"click",rightEnter);
+  //左侧出
+  function leftOut(){
+    $("numList").removeChild($("numList").firstChild);
+  }
+  addEvent($("leftOut"),"click",leftOut);
+  //右侧出
+  function rightOut(){
+    $("numList").removeChild($("numList").lastChild);
+  }
+  addEvent($("rightOut"),"click",rightOut);
+
+//代理的方式绑定liClick事件
+(function liClick(){
+  addEvent($("numList"),"click",function(event){
+    if (event.target&&event.target.nodeName.toLowerCase()=="li") {
+      $("numList").removeChild(event.target);
+    }
+  })
+})();
+
+//排序
+function reSort(){
+  var li=$("numList").getElementsByTagName("li");
+  var arr=[];
+  var temp;
+  for (var i = 0; i < li.length; i++) {
+    arr.push(li[i].style.height.replace("px","")); 
+  }
+  for (var j = 0; j < arr.length; j++) {
+    for (var p = j; p < arr.length; p++) {
+      if (parseFloat(arr[j])>parseFloat(arr[p])) {
+          temp=arr[j];
+          arr[j]=arr[p];
+          arr[p]=temp;
+      }
+    }
+  }
+  for (var i = 0; i < arr.length; i++) {
+        var li=document.createElement("li");
+        li.style.height=arr[i]+"px";
+        $("newNumList").appendChild(li);
+  }
+}
+addEvent($("sort"),"click",reSort); 
+
+</script>
+</body>
+</html>

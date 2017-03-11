@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>IFE JavaScript Task 07</title>
+  <style type="text/css">
+    #orderBtn,#speedBtn{
+      margin: 10px;
+    }
+    .checked{
+      background-color: #20a0ff;
+    }
+    #root,#root div{
+      display: flex;
+      justify-content: space-around;
+      height: 50px;
+      min-width: 50px;
+      background-color: #20a0ff;
+      border: 1px solid black;
+      border-radius: 100%;
+      position: relative;
+      margin: 100px 10px;
+    }
+    .left{
+      left: -50px;
+    }
+    .right{
+      right: -50px;
+    }
+    .left:before,.right:before{
+      content: "";
+      width:3px;
+      height: 58px;
+      background-color: red;
+      position: absolute;
+      bottom: 58px;
+      transform-origin: bottom;/*旋转点*/
+      left: 50%;
+    }
+    .left:before{
+      transform: rotateZ(30deg);
+    }
+    .right:before{
+      transform: rotateZ(-30deg);
+    }
+  </style>
+</head>
+<body>
+  <div id="orderBtn">
+    <button id="preOrder">正序</button>
+    <button id="midOrder">中序</button>
+    <button id="afterOrder">后序</button>
+  </div>
+  <div id="speedBtn">
+    <button id="200">快</button>
+    <button class="checked" id="500">中</button>
+    <button id="800">慢</button>
+  </div>
+
+  <div id="root">
+    <div class="left" id="1">
+      <div class="left" id="2">
+        <div class="right" id="3"></div>
+      </div>
+      <div class="right" id="4">
+        <div class="left" id="5"></div>
+        <div class="right" id="6"></div>
+      </div>
+    </div>
+    <div class="right" id="7">
+      <div class="left" id="8"></div>
+      <div class="right" id="9">
+        <div class="left" id="10"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="js/lib.js"></script>
+  <script type="text/javascript">
+    var orderBtn=$("orderBtn"),
+    speedBtn=$("speedBtn"),
+    treeRoot=$("root");
+    function Tree(box){
+      this.box=$("root");
+      this.color="red";
+      this.speed=500;
+      this.nodeObj={};
+      this.timer=null;
+      this.showArr=[];
+      this.className=["left","right"];
+
+      this.init();
+    }
+
+    Tree.prototype={
+      //整理二叉树节点存入this.nodeObj
+      init:function(){
+        this.nodeObj=this.addNode(this.box);
+      },
+      //整理二叉树节点返回所有子节点
+      addNode: function (node) {
+        if (node) {
+          var nodeObj = {};
+          nodeObj.value = node;
+          if (node.children[0] && node.children[0].className == this.className[1]) {
+            nodeObj.left = null;
+            nodeObj.right = this.addNode(node.children[0]);
+          }
+          else {
+            nodeObj.left = this.addNode(node.children[0]);
+            nodeObj.right = node.children[1] ? this.addNode(node.children[1]) : null;
+          }
+          return nodeObj;
+        }
+      },
+      //开始排序事件
+      starEvent:function(orderStyle){
+        this.showArr=[];//开始时清空数组
+        switch(orderStyle){
+          case "preOrder": this.preOrder(this.nodeObj); break;
+          case "midOrder": this.midOrder(this.nodeObj);  break;
+          case "afterOrder": this.afterOrder(this.nodeObj); break;
+        }
+        this.show();
+      },
+      // 正序：根-前-后
+      preOrder:function(node){
+        if (node!=null) {
+          this.showArr.push(node.value);
+          this.preOrder(node.left);
+          this.preOrder(node.right);
+        }
+      },
+      // 中序：前-根-后
+      midOrder:function(node){
+        if (node!=null) {
+          this.midOrder(node.left);
+          this.showArr.push(node.value);
+          this.midOrder(node.right);
+        }
+      },
+      //后序：前-后-根
+      afterOrder:function(node){
+        if (node!=null) {
+          this.afterOrder(node.left);
+          this.afterOrder(node.right);
+          this.showArr.push(node.value);
+        }
+      },
+      //根据数组顺序显示
+      show:function(){
+        var dataIndex=0
+        this.timer=setInterval(function(){
+          if (dataIndex==this.showArr.length) {
+            clearInterval(this.timer);
+            this.timer=null;
+            return;
+          }else{
+            var color=this.showArr[dataIndex].style.backgroundColor;
+            this.showArr[dataIndex].style.backgroundColor= color=="red"?"rgb(32, 160, 255)":"red";
+          }
+          dataIndex++;
+        }.bind(this),this.speed)//注意函数bind使用，否则this指window
+      }
+    };
+
+
+    var tree=new Tree($(root));
+
+    //二叉树遍历方式
+    addEvent($("orderBtn"),"click",function(event){
+       var Btn=$("orderBtn").getElementsByTagName("button");
+       for (var i = 0; i < Btn.length; i++) {
+        Btn[i].className="";
+      }
+      event.target.className="checked";
+      tree.starEvent(event.target.id);
+    }) 
+
+    //选择速度
+    addEvent($("speedBtn"),"click",function(event){
+       tree.speed=event.target.id;//修改tree的速度
+       var Btn=$("speedBtn").getElementsByTagName("button");
+       for (var i = 0; i < Btn.length; i++) {
+         Btn[i].className="";
+       }
+       event.target.className="checked";
+     }) 
+
+ </script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>IFE JavaScript Task 06</title>
+  <style type="text/css">
+      #input{
+          margin-left: 10px;
+      }
+      #orderBtn,#speedBtn{
+          margin: 10px;
+      }
+      .checked{
+          background-color: #20a0ff;
+      }
+      #root,#root div{
+          display: flex;
+          justify-content: space-around;
+          height: 50px;
+          min-width: 50px;
+          background-color: white;
+          border: 1px solid black;
+          border-radius: 100%;
+          position: relative;
+          margin: 100px 10px;
+      }
+      #root>span,#root div>span{
+          position: absolute;
+          text-align: center;
+          margin-top: 10px;
+          font-size: 20px;
+      }
+      .left:before,.right:before,.middle:before{
+          content: "";
+          width:3px;
+          height: 58px;
+          background-color: #ddd;
+          position: absolute;
+          bottom: 50px;
+          transform-origin: bottom;/*旋转点*/
+          left: 50%;
+      }
+      .left:before{
+          transform: rotateZ(30deg);
+      }
+      .right:before{
+          transform: rotateZ(-30deg);
+      }
+      #root .active{
+        border:2px solid red !important;
+    }
+</style>
+</head>
+<body>
+  <input type="text" id="input">
+  <div id="orderBtn">
+    <button id="depthFirst">深度优先遍历</button>
+    <button id="widthFirst">广度优先遍历</button>
+</div>
+<div id="speedBtn">
+    <button id="200">快</button>
+    <button class="checked" id="500">中</button>
+    <button id="800">慢</button>
+</div>
+<div id="childOperate">
+    <input type="text" id="nameInput">
+    <button id="add">增加</button>
+    <button id="delete">删除</button>
+</div>
+
+<div id="root"><span>root</span>
+    <div class="left" id="1"><span>1</span>
+      <div class="left" id="2"><span>2</span>
+        <div class="left" id="3"><span>3</span></div>
+        <div class="left" id="4"><span>4</span></div>
+        <div class="right" id="5"><span>5</span></div>
+        <div class="right" id="6"><span>6</span></div>
+    </div>
+    <div class="middle" id="7"><span>7</span>
+    </div>
+    <div class="right" id="8"><span>8</span>
+        <div class="left" id="9"><span>9</span></div>
+        <div class="right" id="10"><span>10</span></div>
+    </div>
+</div>
+<div class="middle" id="11"><span>11</span>
+  <div class="left" id="12"><span>12</span>
+    <div class="left" id="13"><span>13</span></div>
+    <div class="middle" id="14"><span>14</span></div>
+    <div class="right" id="15"><span>15</span></div>
+</div>
+<div class="right" id="16"><span>16</span>
+    <div class="left" id="17"><span>17</span>
+       <div class="middle" id="18"><span>18</span></div>
+   </div>
+   <div class="right" id="19"><span>19</span></div>
+</div>
+</div>
+<div class="right" id="20"><span>20</span></div>
+</div>
+
+<script type="text/javascript" src="js/lib.js"></script>
+<script type="text/javascript">
+  var orderBtn=$("orderBtn"),
+  speedBtn=$("speedBtn"),
+  treeRoot=$("root");
+  function Tree(box){
+    this.box=$("root");
+    this.color="white";
+    this.speed=500;
+    this.nodeObj={};
+    this.timer=null;
+    this.showArr=[];
+    this.className=["left","right"];
+
+    // this.init();
+}
+
+Tree.prototype={
+      //开始排序事件
+      starEvent:function(orderStyle){
+        this.showArr=[];//开始时清空数组
+        switch(orderStyle){
+          case "depthFirst": this.depthFirst(this.box); break;
+          case "widthFirst": 
+          // this.showArr.push(this.nodeObj.value);
+          this.widthFirst(this.box); 
+          break;
+      }
+      this.show();
+  },
+      //深度遍历
+      depthFirst: function (box) {
+        this.showArr.push(box);
+        for (var i = 1; i < box.children.length; i++) {
+            //递归函数
+            this.depthFirst(box.children[i]);
+        }
+    },
+      //广度遍历
+      widthFirst: function (box) {
+        //parent存放父节点，取其子节点，放在数组后面，待之后将子节点做父节点用
+        var parent = box,  //当前父元素
+            parents=[];    //还没有用的元素
+            do {
+              this.showArr.push(parent);
+              for (var i = 1; i < parent.children.length; i++) {
+                parents.push(parent.children[i]);
+            }
+            parent = parents.shift();  //将节点赋给parent后再在数组中删除
+        }
+        while (parent);
+    },
+      //根据数组顺序显示
+      show:function(){
+        var dataIndex=0
+        this.timer=setInterval(function(){
+          if (dataIndex==this.showArr.length) {
+            clearInterval(this.timer);
+            this.timer=null;
+            return;
+        }else{
+            var color=this.showArr[dataIndex].style.backgroundColor;
+            this.showArr[dataIndex].style.backgroundColor= color=="rgb(32, 160, 255)"?"white":"#20a0ff";
+            //关键字搜索
+            var span=this.showArr[dataIndex].getElementsByTagName("span")[0];
+            if ($("input").value.replace(/\s+/g,"")!="") {//trim函数
+              if (span.innerText.indexOf($("input").value)!=-1) {
+                  span.style.color="red";
+              }
+              else{
+                  span.style.color="black";
+              }
+            }
+            else{
+               span.style.color="black";
+            }
+        }
+           dataIndex++;
+        }.bind(this),this.speed)//注意函数bind使用，否则this指window
+    }
+};
+
+
+var tree=new Tree($(root));
+
+    //多叉树遍历方式
+    addEvent($("orderBtn"),"click",function(event){
+       var Btn=$("orderBtn").getElementsByTagName("button");
+       for (var i = 0; i < Btn.length; i++) {
+          Btn[i].className="";
+      }
+      event.target.className="checked";
+      tree.starEvent(event.target.id);
+  }) 
+
+    //选择速度
+    addEvent($("speedBtn"),"click",function(event){
+       tree.speed=event.target.id;//修改tree的速度
+       var Btn=$("speedBtn").getElementsByTagName("button");
+       for (var i = 0; i < Btn.length; i++) {
+           Btn[i].className="";
+       }
+       event.target.className="checked";
+   }) 
+    //选中节点
+    addEvent($("root"),"click",function(event){
+        if (event.target) {
+        var target =  event.target.nodeName.toLowerCase()=="div" ? event.target : event.target.parentElement;//条件语句，后一种为点击<span>的情况
+            if ($("root").getElementsByClassName("active")[0]) {
+                var className=$("root").getElementsByClassName("active")[0].className;
+                $("root").getElementsByClassName("active")[0].className=className.replace("active","");
+            }
+            target.className+=" active";
+        }
+    })
+    var index=21;
+    //增加选中节点子节点
+    addEvent($("add"),"click",function(){
+        var name=$("nameInput").value;
+        if ($("root").getElementsByClassName("active")[0]) {
+            var div=document.createElement("div");
+            div.className="middle";
+            div.id=index;
+            div.style.backgroundColor=$("root").style.backgroundColor;
+            div.innerHTML="<span>"+name+"</span>"
+            $("root").getElementsByClassName("active")[0].appendChild(div);
+        }
+    })
+    //删除选中节点
+    addEvent($("delete"),"click",function(event){
+     var select=$("root").getElementsByClassName("active")[0];
+     select.parentElement.removeChild(select);
+ })
+</script>
+</body>
+</html>
