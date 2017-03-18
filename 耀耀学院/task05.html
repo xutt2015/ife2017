@@ -68,12 +68,12 @@
 			background-color: red;
 		}
 		/*动画通过transition实现,*/
-		#box{
+/*		#box{
 			transition: left 1s, top 1s, transform 1s;
 			-moz-transition: left 1s, top 1s, -moz-transform 1s;
 			-webkit-transition: left 1s, top 1s, -webkit-transform 1s;
 			-o-transition: left 1s, top 1s, -o-transform 1s;
-		}
+		}*/
 	</style>
 </head>
 <body>
@@ -274,15 +274,6 @@
         		"x":1,
         		"y":1
         	}
-        	// ,
-        	// transitionMov:["left 1s 1s, top 1s 1s, transform 1s;",
-        	// "left 1s 1s, top 1s 1s, -moz-transform 1s;",
-        	// "left 1s 1s, top 1s 1s, -webkit-transform 1s;",
-        	// "left 1s 1s, top 1s 1s, -o-transform 1s;"],
-        	// transition:["left 1s, top 1s, transform 1s;",
-        	// "left 1s, top 1s, -moz-transform 1s;",
-        	// "left 1s, top 1s, -webkit-transform 1s;",
-        	// "left 1s, top 1s, -o-transform 1s;"]
         }
         //计算百分比
         function countPercent(percent){
@@ -290,6 +281,7 @@
         }
         //正方形块的移动函数
         function boxMove(direction){
+        	$("box").style.transition="left 1s,top 1s";
         	switch(direction){
         		case "x":
         		if(box.position.x<10){
@@ -331,6 +323,7 @@
         }
         //正方形块的左转函数
         function boxTurnLeft(){
+        	$("box").style.transition="transform 1s";
         	switch(box.direction){
         		case "x":
         		$("box").style.transform="rotate(-90deg)";
@@ -352,6 +345,7 @@
         }
         //正方形块的右转函数
         function boxTurnRight(){
+        	$("box").style.transition="transform 1s";
         	switch(box.direction){
         		case "x":
         		$("box").style.transform="rotate(90deg)";
@@ -373,6 +367,7 @@
         }
         //正方形块的后转函数
         function boxTurnBack(){
+        	$("box").style.transition="transform 1s";
         	switch(box.direction){
         		case "x":
         		$("box").style.transform="rotate(180deg)";
@@ -395,18 +390,6 @@
         //运动函数
         function boxRun(){
         	var operate=$("operate").value.toLowerCase();
-        	// if (operate.indexOf("move")!=-1) {
-        	// 	$("box").style.transition=box.transitionMov[0];
-        	// 	$("box").style.mozTransition=box.transitionMov[1];
-        	// 	$("box").style.webkitTransition=box.transitionMov[2];
-        	// 	$("box").style.oTransition=box.transitionMov[3];
-        	// }
-        	// else{
-        	// 	$("box").style.transition=box.transition[0];
-        	// 	$("box").style.mozTransition=box.transition[1];
-        	// 	$("box").style.webkitTransition=box.transition[2];
-        	// 	$("box").style.oTransition=box.transition[3];
-        	// }
         	switch(operate){
         		case "go":
         		boxMove(box.direction);
@@ -433,25 +416,32 @@
         		boxMove("y");
         		break;
         		case "mov lef":
+        		$("box").style.transition="transform 1s";
         		$("box").style.transform="rotate(180deg)";
         		box.direction="-x";	
         		boxMove("-x");
         		break;
         		case "mov top":
+        		$("box").style.transition="transform 1s";
         		$("box").style.transform="rotate(-90deg)";
         		box.direction="-y";
         		boxMove("-y");
         		break;
         		case "mov rig":
+        		$("box").style.transition="transform 1s";
         		$("box").style.transform="rotate(0deg)";
         		box.direction="x";	 
         		boxMove("x");
         		break;
         		case "mov bot":
+        		$("box").style.transition="transform 1s";
         		$("box").style.transform="rotate(90deg)";
         		box.direction="y";	
         		boxMove("y");
         		break;
+        		default:
+        		alert("命令输入有误！");
+        		break
         	}
         }
         addEvent($("run"),"click",boxRun)
