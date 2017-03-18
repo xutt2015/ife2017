@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>IFE JavaScript Task 02</title>
+	<style type="text/css">
+		body{
+			text-align: center;
+		}
+		/*封装一个验证输入框样式*/
+		.form{
+			font-family: serif;
+			margin-top: 10px;
+		}
+		.form .label{
+			font-size: 20px;
+			font-weight: bold;
+			line-height: 38px;
+		}
+		.form .label label{
+			display: inline-block;
+			text-align: right;
+			width: 100px;
+		}
+		.form input{
+			height: 33px;
+			vertical-align: top;
+			border-radius: 4px;
+			border-style: groove;
+			width: 300px;
+			margin-left: 20px;
+		}
+		.form .remark{
+			margin-left: 540px;
+			line-height: 40px;
+			color: #aaa;
+		}
+		button{
+			height: 38px;
+			width: 100px;
+			background-color: #0960b9;
+			color: white;
+			font-size: 18px;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			padding: 5px 10px;
+			letter-spacing: 5px;
+			margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="form">
+		<div class="label"><label>名称</label><input id="name_input" type="text"></div>
+		<div style="text-align: left;display: none;"><span class="remark">必填，长度为4-16个字符</span></div>
+	</div>
+	<div class="form">
+		<div class="label"><label>密码</label><input id="password_input" type="password"></div>
+		<div style="text-align: left;display: none;"><span class="remark">长度为6-12个字符</span></div>
+	</div>
+	<div class="form">
+		<div class="label"><label>密码确认</label><input id="passwordRetry_input" type="password"></div>
+		<div style="text-align: left;display: none;"><span class="remark">再次输入相同密码</span></div>
+	</div>
+	<div class="form">
+		<div class="label"><label>邮箱</label><input id="email_input" type="text"></div>
+		<div style="text-align: left;display: none;"><span class="remark">请输入您的邮箱</span></div>
+	</div>
+	<div class="form">
+		<div class="label"><label>手机</label><input id="phone_input" type="text"></div>
+		<div style="text-align: left;display: none;"><span class="remark">请输入手机号</span></div>
+	</div>
+	<button id="submit">提交</button>
+
+	<script type="text/javascript">
+
+		$=function(id){
+			return document.getElementById(id);
+		}
+
+		function addEvent(element,event,listerner){
+			if (element.addEventListener) {
+				element.addEventListener(event,listerner,false);
+			}
+			else if (element.attachEvent) {
+                element.attachEvent('on'+event,listerner);//IE5+
+            }
+            else{
+            	element["on"+event]=listerner;
+            }
+        }
+        function nameVerify(){
+        	var text=$('name_input').value.trim();
+        	var div=$('name_input').parentElement.nextElementSibling;
+        	if(text==''){
+        		div.children[0].innerText="名称不能为空";
+        		div.children[0].style.color='red';
+        		$('name_input').style.borderColor='red';
+        	}
+        	else{
+        		if(countLength(text)<4||countLength(text)>16){
+        			div.children[0].innerText="长度为4-12的字符！每个汉字，中文符号长度为2";
+        			div.children[0].style.color='red';
+        			$('name_input').style.borderColor='red';
+        		}
+        		else{
+        			div.children[0].innerText="名称格式正确";
+        			div.children[0].style.color='green';
+        			$('name_input').style.borderColor='green';
+        		}
+        	}
+        	div.style.display="block";
+        }
+        function countLength(str){
+        	var inputLength = 0;
+	         //给一个变量来记录长度
+	         for (var i = 0; i < str.length; i++) {
+	         	var countCode = str.charCodeAt(i);//获取字符ASCII码
+	             //判断是不是ASCII码,Unicode码前128个字符是ASCII码
+	             if (countCode >= 0 && countCode <= 128) {
+	             	inputLength ++;
+	             }else{//如果是扩展码，则一次+2
+	             	inputLength +=2;
+	             }
+	         }
+	         return inputLength;
+	     }
+	     function focusEvent(event){
+	     	var div=this.parentElement.nextElementSibling;
+	     	div.style.display="block";
+	     }
+	     //name验证
+	     addEvent($('name_input'),'focus',focusEvent);
+	     addEvent($('name_input'),'blur',nameVerify);
+         //password验证
+         function passwordVerify(){
+         	var str=$('password_input').value;
+         	var div=$('password_input').parentElement.nextElementSibling;
+         	if(str.length>=6&&str.length<=12){
+         		div.children[0].innerText="密码可用";
+         		div.children[0].style.color='green';
+         		$('password_input').style.borderColor='green';
+         	}else{
+         		div.children[0].innerText="密码为6-12个字符！";
+         		div.children[0].style.color='red';
+         		$('password_input').style.borderColor='red';
+         	}
+         	div.style.display="block";
+         }
+         addEvent($('password_input'),'focus',focusEvent);
+         addEvent($('password_input'),'blur',passwordVerify);
+	     //密码确认验证
+	     function passwordRetryVerify(){
+	     	var str=$('passwordRetry_input').value;
+	     	var div=$('passwordRetry_input').parentElement.nextElementSibling;
+	     	if(str==$('password_input').value){
+	     		div.children[0].innerText="两次输入密码一致";
+	     		div.children[0].style.color='green';
+	     		$('passwordRetry_input').style.borderColor='green';
+	     	}else{
+	     		div.children[0].innerText="两次输入密码不一致！";
+	     		div.children[0].style.color='red';
+	     		$('passwordRetry_input').style.borderColor='red';
+	     	}
+	     	div.style.display="block";
+	     }
+	     addEvent($('passwordRetry_input'),'focus',focusEvent);
+	     addEvent($('passwordRetry_input'),'blur',passwordRetryVerify);
+	     //邮箱验证
+	     function emailVerify(){
+	     	var str=$('email_input').value;
+	     	var div=$('email_input').parentElement.nextElementSibling;
+	     	var reg = /^(\w+[-_.]?)*\w+@(\w+[-_.]?)*\w+\.\w{2,3}$/;//\.表示. 而.表示除换行符和其他行终止符之外的意外自负
+	     	if(reg.test(str)){
+	     		div.children[0].innerText="邮箱格式正确";
+	     		div.children[0].style.color='green';
+	     		$('email_input').style.borderColor='green';
+	     	}else{
+	     		div.children[0].innerText="邮箱格式不正确";
+	     		div.children[0].style.color='red';
+	     		$('email_input').style.borderColor='red';
+	     	}
+	     	div.style.display="block";
+	     }
+	     addEvent($('email_input'),'focus',focusEvent);
+	     addEvent($('email_input'),'blur',emailVerify);
+	     //手机验证
+	     function phoneVerify(){
+	     	var str=$('phone_input').value;
+	     	var div=$('phone_input').parentElement.nextElementSibling;
+	     	var reg=/^1[1 3 4 5 7 8]\d{9}/;
+	     	if(reg.test(str)){
+	     		div.children[0].innerText="手机格式正确";
+	     		div.children[0].style.color='green';
+	     		$('phone_input').style.borderColor='green';
+	     	}else{
+	     		div.children[0].innerText="手机格式不正确";
+	     		div.children[0].style.color='red';
+	     		$('phone_input').style.borderColor='red';
+	     	}
+	     	div.style.display="block";
+	     }
+	     addEvent($('phone_input'),'focus',focusEvent);
+	     addEvent($('phone_input'),'blur',phoneVerify);
+	     //提交
+	     function formSbumit(){
+	     	nameVerify();
+	     	passwordVerify();
+	     	passwordRetryVerify();
+	     	emailVerify();
+	     	phoneVerify();
+	     	var input=document.getElementsByTagName("input");
+	     	for (var i = 0; i < input.length; i++) {
+	     		if (input[i].style.borderColor=="red") {
+                    alert("输入有误！");
+                    return;
+	     		}	
+	     	}
+	     }
+	     addEvent($('submit'),'click',formSbumit);
+	 </script>
+	</body>
+	</html>

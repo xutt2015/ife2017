@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IFE task 12</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<style type="text/css">
+    body{
+        text-align: center;
+    }
+    .table{
+        margin: auto;
+        font-weight: bold;
+    }
+    .thead tr{
+        background-color: black;
+        color: white;
+    }
+    /*前三行*/
+    .tbody tr:nth-of-type(-n+3){
+        color: red;
+    }
+    /*偶数行*/
+    .tbody tr:nth-of-type(odd){
+        background-color: white;
+    }
+    /*奇数行*/
+    .tbody tr:nth-of-type(even){
+        background-color: #ddd;
+    }
+    /*css3过渡 transition*/
+    .ipt
+    {
+        width:100px;
+        transition:width 2s;
+        -moz-transition:width 2s; /* Firefox 4 */
+        -webkit-transition:width 2s; /* Safari and Chrome */
+        -o-transition:width 2s; /* Opera */
+    }
+    .ipt:focus
+    {
+        width:200px;
+    }
+    /*css3 动画*/
+    @keyframes banner {
+        0% {left: 0;}
+        20% {left: 0;}
+        30% {left: -100%;}
+        50% {left: -100%;}
+        60% {left: -200%;}
+        80% {left: -200%;}
+        100% {left: 0}
+    }
+    @-moz-keyframes banner {        /*firefox*/
+        0% {left: 0;}
+        20% {left: 0;}
+        30% {left: -100%;}
+        50% {left: -100%;}
+        60% {left: -200%;}
+        80% {left: -200%;}
+        100% {left: 0}
+    }
+    @-webkit-keyframes banner {       /*safari and chrome*/
+        0% {left: 0;}
+        20% {left: 0;}
+        30% {left: -100%;}
+        50% {left: -100%;}
+        60% {left: -200%;}
+        80% {left: -200%;}
+        100% {left: 0}
+    }
+    @-o-keyframes banner {           /*opera*/
+        0% {left: 0;}
+        20% {left: 0;}
+        30% {left: -100%;}
+        50% {left: -100%;}
+        60% {left: -200%;}
+        80% {left: -200%;}
+        100% {left: 0}
+    }
+
+    @keyframes bannerTo2 {
+        0% {left: -100%;}
+        20% {left: -100%;}
+        30% {left: -200%;}
+        50% {left: -200%;}
+        70% {left: 0;}
+        90% {left: 0;}
+        100% {left: -100%}
+    }
+    @-moz-keyframes bannerTo2 {        /*firefox*/
+        0% {left: -100%;}
+        20% {left: -100%;}
+        30% {left: -200%;}
+        50% {left: -200%;}
+        70% {left: 0;}
+        90% {left: 0;}
+        100% {left: -100%}
+    }
+    @-webkit-keyframes bannerTo2 {      /*safari and chrome*/
+        0% {left: -100%;}
+        20% {left: -100%;}
+        30% {left: -200%;}
+        50% {left: -200%;}
+        70% {left: 0;}
+        90% {left: 0;}
+        100% {left: -100%}
+    }
+    @-o-keyframes bannerTo2 {           /*opera*/
+        0% {left: -100%;}
+        20% {left: -100%;}
+        30% {left: -200%;}
+        50% {left: -200%;}
+        70% {left: 0;}
+        90% {left: 0;}
+        100% {left: -100%}
+    }
+
+    @keyframes bannerTo3 {
+        0% {left: -200%;}
+        20% {left: -200%;}
+        40% {left: 0;}
+        60% {left: 0;}
+        70% {left: 100%;}
+        90% {left: 100%;}
+        100% {left: -200%;}
+    }
+    @-moz-keyframes bannerTo3 {
+        0% {left: -200%;}
+        20% {left: -200%;}
+        40% {left: 0;}
+        60% {left: 0;}
+        70% {left: 100%;}
+        90% {left: 100%;}
+        100% {left: -200%;}
+    }
+    @-webkit-keyframes bannerTo3 {
+        0% {left: -200%;}
+        20% {left: -200%;}
+        40% {left: 0;}
+        60% {left: 0;}
+        70% {left: 100%;}
+        90% {left: 100%;}
+        100% {left: -200%;}
+    }
+    @-o-keyframes bannerTo3 {
+        0% {left: -200%;}
+        20% {left: -200%;}
+        40% {left: 0;}
+        60% {left: 0;}
+        70% {left: 100%;}
+        90% {left: 100%;}
+        100% {left: -200%;}
+    }
+    .banner_wrap {
+        position: relative;
+        height: 150px;
+        width: 300px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+    .bn_wrap{
+        position: absolute;
+        height: 100%;
+        width: 300%;
+    }
+    .bn_1 {
+        width: 33.33333333%;
+        float: left;
+        height: 100%;
+        background-color: rgb(0,138,8);
+    }
+    .bn_2 {
+        float: left;
+        width: 33.33333333%;
+        height: 100%;
+    }
+    .bn_2_left {
+        float: left;
+        width: 50%;
+        height: 100%;
+        background-color: rgb(70,0,255);
+    }
+    .bn_2_right {
+        float: left;
+        width: 50%;
+        height: 100%;
+        background-color: rgb(0,138,8);
+    }
+    .bn_3 {
+        float: left;
+        width: 33.33333333%;
+        height: 100%;
+        background-color: rgb(70,0,255);
+    }
+    .bn_change {
+        position: absolute;
+        z-index: 10;
+        bottom: 0;
+        right: 0;
+    }
+    [class*='bn_change_'] {
+        margin-left: 2px;
+        width: 30px;
+        line-height: 30px;
+        float: left;/*或者display：inline-block;*/
+        text-align: center;
+        color: #fff;
+        background-color: rgba(255,255,255,0.5);
+    }
+    #bn_0{
+        z-index: 1;
+        animation: banner 8s linear infinite normal;
+        /* Firefox: */
+        -moz-animation: banner 8s linear infinite normal;
+        /* Safari 和 Chrome: */
+        -webkit-animation: banner 8s linear infinite normal;
+        /* Opera: */
+        -o-animation: banner 8s linear infinite normal;
+    }
+    #bn_2:target {
+        height: 150px;
+        z-index: 7;
+        animation: bannerTo2 8s linear infinite normal;
+        -moz-animation: bannerTo2 8s linear infinite normal;
+        -webkit-animation: bannerTo2 8s linear infinite normal;
+        -o-animation: bannerTo2 8s linear infinite normal;
+    }
+    #bn_1:target {
+        z-index: 7;
+        height: 150px;
+        animation: banner 8s linear infinite normal;
+        -moz-animation: banner 8s linear infinite normal;
+        -webkit-animation: banner 8s linear infinite normal;
+        -o-animation: banner 8s linear infinite normal;
+    }
+    #bn_3:target {
+        z-index: 7;
+        height: 150px;
+        animation: bannerTo3 8s linear infinite normal;
+        -moz-animation: bannerTo3 8s linear infinite normal;
+        -webkit-animation: bannerTo3 8s linear infinite normal;
+        -o-animation: bannerTo3 8s linear infinite normal;
+    }
+</style>
+<body>
+    <div>
+        <table class="table">
+            <thead class="thead">
+                <tr>
+                    <th>排名</th>
+                    <th>网站</th>
+                    <th>热度</th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+                <tr>
+                    <td>1.</td>
+                    <td>百度前端技术学院</td>
+                    <td>13000</td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                    <td>百度前端技术学院</td>
+                    <td>12000</td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                    <td>百度前端技术学院</td>
+                    <td>11000</td>
+                </tr>
+                <tr>
+                    <td>4.</td>
+                    <td>百度前端技术学院</td>
+                    <td>11000</td>
+                </tr>
+                <tr>
+                    <td>5.</td>
+                    <td>百度前端技术学院</td>
+                    <td>10000</td>
+                </tr>
+                <tr>
+                    <td>6.</td>
+                    <td>百度前端技术学院</td>
+                    <td>8000</td>
+                </tr>
+                <tr>
+                    <td>7.</td>
+                    <td>百度前端技术学院</td>
+                    <td>7000</td>
+                </tr>
+                <tr>
+                    <td>8.</td>
+                    <td>百度前端技术学院</td>
+                    <td>6000</td>
+                </tr>
+                <tr>
+                    <td>9.</td>
+                    <td>百度前端技术学院</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>10.</td>
+                    <td>百度前端技术学院</td>
+                    <td>4000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="ipt_wrap">
+        <label for="ipt"></label>
+        <input id="ipt" class="ipt" type="text">
+    </div>
+
+    <div class="banner_wrap">
+        <div id="bn_0" class="bn_wrap">
+            <div class="bn_1"></div>
+            <div class="bn_2">
+                <div class="bn_2_left"></div>
+                <div class="bn_2_right"></div>
+            </div>
+            <div class="bn_3"></div>
+        </div>
+        <div id="bn_1" class="bn_wrap">
+            <div class="bn_1"></div>
+            <div class="bn_2">
+                <div class="bn_2_left"></div>
+                <div class="bn_2_right"></div>
+            </div>
+            <div class="bn_3"></div>
+        </div>
+        <div id="bn_2" class="bn_wrap">
+            <div class="bn_1"></div>
+            <div class="bn_2">
+                <div class="bn_2_left"></div>
+                <div class="bn_2_right"></div>
+            </div>
+            <div class="bn_3"></div>
+        </div>
+        <div id="bn_3" class="bn_wrap">
+            <div class="bn_1"></div>
+            <div class="bn_2">
+                <div class="bn_2_left"></div>
+                <div class="bn_2_right"></div>
+            </div>
+            <div class="bn_3"></div>
+        </div>
+        <div class="bn_change">
+            <a href="#bn_1" class="bn_change_1">1</a>
+            <a href="#bn_2" class="bn_change_2">2</a>
+            <a href="#bn_3" class="bn_change_3">3</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>task010</title>
+	<style type="text/css">
+	/*flexBox
+      1）容器属性：flex-direction--排列方式 flex-wrap--是否换行 flex-flow--前两个综合  justify-content--水平对齐方式（居中等） align-items--垂直对齐方式（居中等） align-content--多轴对齐方式
+      2）项目属性：order--排列顺序 flex-grow--放大 flex-shrink--缩小 flex-basis--length  flex--放大、缩小、length  align-self--自己的排列方式
+      */
+      body{
+      	display: flex;
+      	align-items: flex-start;
+      	padding: 20px;
+      }
+      @media (min-width: 640px){
+      	body{
+      		align-items:center;
+      		justify-content: space-between;
+      	}
+      }
+      @media (max-width: 640px){
+      	body{
+      		align-items: flex-start;
+      		justify-content: space-between;
+      		flex-wrap: wrap;
+      	}
+      	.div1{
+      		order:2;
+      	}
+      	.div2{
+      		order:3;
+      	}
+      	.div3{
+      		margin-top: 30px;
+      		order:4;
+      	}
+      	.div4{
+      		order:1;
+      	}
+      }
+      .div1{
+      	width: 150px;
+      	height: 120px;
+      	border:1px solid red;
+      }
+      .div2{
+      	width: 150px;
+      	height: 100px;
+      	border:1px solid red;
+      }
+      .div3{
+      	width: 150px;
+      	height: 40px;
+      	border:1px solid red;
+      }
+      .div4{
+      	width: 150px;
+      	height: 200px;
+      	border:1px solid blue;
+      }
+  </style>
+</head>
+<body> 
+	<div class="div1"></div>
+	<div class="div2"></div>
+	<div class="div3"></div>
+	<div class="div4"></div>
+</body>
+</html>

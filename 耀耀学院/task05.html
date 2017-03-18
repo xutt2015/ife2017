@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>IFE JavaScript Task 05</title>
+	<style type="text/css">
+		body{
+			text-align: center;
+		}
+		.diamondGame{
+			display: inline-block;
+			width: 511px;
+			height: 511px;
+			border: 2px #000 solid;
+			position: relative;
+		}
+		.diamondGame table{
+			border-collapse: collapse;
+		}
+		.diamondGame td{
+			height: 48px;
+			width: 48px;
+			border: 1px #ddd solid;
+		}
+		.colNum{
+			width: 511px;
+			margin-left: 380px;
+			margin-bottom: -10px;
+		}
+		.colNum table{
+			border-collapse: collapse;
+		}
+		.colNum td{
+			height: 20px;
+			width: 48px;
+			text-align: center;
+		}
+		.rowNum{
+			display: inline-block;
+		}
+		.rowNum p{
+			line-height: 38px;
+		}
+		#run{
+			margin-left: 10px;
+			background-color: white;
+			border-style: solid;
+		}
+		#operate{
+			margin-left: -265px;
+		}
+		#box{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 51px;
+			height: 51px;
+			display: flex;
+		}
+		#box .box_front{
+			flex: 1;
+			height:100%;
+			background-color: blue;
+		}
+		#box .box_behind{
+			flex: 3;
+			height:100%;
+			background-color: red;
+		}
+		/*动画通过transition实现,*/
+		#box{
+			transition: left 1s, top 1s, transform 1s;
+			-moz-transition: left 1s, top 1s, -moz-transform 1s;
+			-webkit-transition: left 1s, top 1s, -webkit-transform 1s;
+			-o-transition: left 1s, top 1s, -o-transform 1s;
+		}
+	</style>
+</head>
+<body>
+	<div class="colNum">
+		<table>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+					<td>4</td>
+					<td>5</td>
+					<td>6</td>
+					<td>7</td>
+					<td>8</td>
+					<td>9</td>
+					<td>10</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="rowNum">	
+		<p>1</p>
+		<p>2</p>
+		<p>3</p>
+		<p>4</p>
+		<p>5</p>
+		<p>6</p>
+		<p>7</p>
+		<p>8</p>
+		<p>9</p>
+		<p>10</p>
+	</div>
+	<div class="diamondGame">
+		<table>
+			<tbody>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<div id="box">
+			<div class="box_behind"></div>
+			<div class="box_front"></div>
+		</div>
+	</div>
+	<div>
+		<input type="text" id="operate"><button id="run">执行</button>
+		<p> 注意(不区分大小写)：</p>
+		<p> go:前进   tun lef:左转   tun rig:右转   tun bac:向后转；</p>
+		<p> TRA LEF：向屏幕的左侧移动一格，方向不变</p>
+		<p> TRA TOP：向屏幕的上面移动一格，方向不变</p>
+		<p>	TRA RIG：向屏幕的右侧移动一格，方向不变</p>
+		<p>	TRA BOT：向屏幕的下面移动一格，方向不变</p>
+		<p>	MOV LEF：方向转向屏幕左侧，并向屏幕的左侧移动一格</p>
+		<p>	MOV TOP：方向转向屏幕上面，向屏幕的上面移动一格</p>
+		<p>	MOV RIG：方向转向屏幕右侧，向屏幕的右侧移动一格</p>
+		<p>	MOV BOT：方向转向屏幕下面，向屏幕的下面移动一格</p>
+	</div>
+	<script type="text/javascript">
+
+		$=function(id){
+			return document.getElementById(id);
+		}
+
+		function addEvent(element,event,listerner){
+			if (element.addEventListener) {
+				element.addEventListener(event,listerner,false);
+			}
+			else if (element.attachEvent) {
+                element.attachEvent('on'+event,listerner);//IE5+
+            }
+            else{
+            	element["on"+event]=listerner;
+            }
+        }
+        //初始化box的方位，位置
+        var box={
+        	direction:"x",
+        	position:{
+        		"x":1,
+        		"y":1
+        	}
+        	// ,
+        	// transitionMov:["left 1s 1s, top 1s 1s, transform 1s;",
+        	// "left 1s 1s, top 1s 1s, -moz-transform 1s;",
+        	// "left 1s 1s, top 1s 1s, -webkit-transform 1s;",
+        	// "left 1s 1s, top 1s 1s, -o-transform 1s;"],
+        	// transition:["left 1s, top 1s, transform 1s;",
+        	// "left 1s, top 1s, -moz-transform 1s;",
+        	// "left 1s, top 1s, -webkit-transform 1s;",
+        	// "left 1s, top 1s, -o-transform 1s;"]
+        }
+        //计算百分比
+        function countPercent(percent){
+        	return Number(percent.replace("%",""))/100;
+        }
+        //正方形块的移动函数
+        function boxMove(direction){
+        	switch(direction){
+        		case "x":
+        		if(box.position.x<10){
+        			$("box").style.left=(countPercent($("box").style.left)+0.1)*100+"%";
+        			box.position.x++;
+        		}
+        		else{
+        			alert("小球已到达边界！");
+        		}
+        		break;
+        		case "-x":
+        		if(box.position.x>1){
+        			$("box").style.left=(countPercent($("box").style.left)-0.1)*100+"%";
+        			box.position.x--;
+        		}
+        		else{
+        			alert("小球已到达边界！");
+        		}
+        		break;
+        		case "y":
+        		if(box.position.y<10){
+        			$("box").style.top=(countPercent($("box").style.top)+0.1)*100+"%";
+        			box.position.y++;
+        		}
+        		else{
+        			alert("小球已到达边界！");
+        		}
+        		break;
+        		case "-y":
+        		if(box.position.y>1){
+        			$("box").style.top=(countPercent($("box").style.top)-0.1)*100+"%";
+        			box.position.y--;
+        		}
+        		else{
+        			alert("小球已到达边界！");
+        		}
+        		break;
+        	}
+        }
+        //正方形块的左转函数
+        function boxTurnLeft(){
+        	switch(box.direction){
+        		case "x":
+        		$("box").style.transform="rotate(-90deg)";
+        		box.direction="-y";
+        		break;
+        		case "-x":
+        		$("box").style.transform="rotate(90deg)";
+        		box.direction="y";	        			
+        		break;
+        		case "y":
+        		$("box").style.transform="rotate(0deg)";
+        		box.direction="x";	 
+        		break;
+        		case "-y":
+        		$("box").style.transform="rotate(180deg)";
+        		box.direction="-x";	
+        		break;
+        	}
+        }
+        //正方形块的右转函数
+        function boxTurnRight(){
+        	switch(box.direction){
+        		case "x":
+        		$("box").style.transform="rotate(90deg)";
+        		box.direction="y";
+        		break;
+        		case "-x":
+        		$("box").style.transform="rotate(-90deg)";
+        		box.direction="-y";	        			
+        		break;
+        		case "y":
+        		$("box").style.transform="rotate(180deg)";
+        		box.direction="-x";	 
+        		break;
+        		case "-y":
+        		$("box").style.transform="rotate(0deg)";
+        		box.direction="x";	
+        		break;
+        	}
+        }
+        //正方形块的后转函数
+        function boxTurnBack(){
+        	switch(box.direction){
+        		case "x":
+        		$("box").style.transform="rotate(180deg)";
+        		box.direction="-x";
+        		break;
+        		case "-x":
+        		$("box").style.transform="rotate(0deg)";
+        		box.direction="x";	        			
+        		break;
+        		case "y":
+        		$("box").style.transform="rotate(-90deg)";
+        		box.direction="-y";	 
+        		break;
+        		case "-y":
+        		$("box").style.transform="rotate(90deg)";
+        		box.direction="y";	
+        		break;
+        	}
+        }
+        //运动函数
+        function boxRun(){
+        	var operate=$("operate").value.toLowerCase();
+        	// if (operate.indexOf("move")!=-1) {
+        	// 	$("box").style.transition=box.transitionMov[0];
+        	// 	$("box").style.mozTransition=box.transitionMov[1];
+        	// 	$("box").style.webkitTransition=box.transitionMov[2];
+        	// 	$("box").style.oTransition=box.transitionMov[3];
+        	// }
+        	// else{
+        	// 	$("box").style.transition=box.transition[0];
+        	// 	$("box").style.mozTransition=box.transition[1];
+        	// 	$("box").style.webkitTransition=box.transition[2];
+        	// 	$("box").style.oTransition=box.transition[3];
+        	// }
+        	switch(operate){
+        		case "go":
+        		boxMove(box.direction);
+        		break;
+        		case "tun lef":
+        		boxTurnLeft();
+        		break;
+        		case "tun rig":
+        		boxTurnRight();
+        		break;
+        		case "tun bac":
+        		boxTurnBack();
+        		break;
+        		case "tra lef":
+        		boxMove("-x");
+        		break;
+        		case "tra top":
+        		boxMove("-y");
+        		break;
+        		case "tra rig":
+        		boxMove("x");
+        		break;
+        		case "tra bot":
+        		boxMove("y");
+        		break;
+        		case "mov lef":
+        		$("box").style.transform="rotate(180deg)";
+        		box.direction="-x";	
+        		boxMove("-x");
+        		break;
+        		case "mov top":
+        		$("box").style.transform="rotate(-90deg)";
+        		box.direction="-y";
+        		boxMove("-y");
+        		break;
+        		case "mov rig":
+        		$("box").style.transform="rotate(0deg)";
+        		box.direction="x";	 
+        		boxMove("x");
+        		break;
+        		case "mov bot":
+        		$("box").style.transform="rotate(90deg)";
+        		box.direction="y";	
+        		boxMove("y");
+        		break;
+        	}
+        }
+        addEvent($("run"),"click",boxRun)
+
+    </script>
+</body>
+</html>

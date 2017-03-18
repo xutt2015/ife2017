@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>IFE JavaScript Task 03</title>
+	<style type="text/css">
+		body{
+			text-align: center;
+		}
+		/*封装一个验证输入框样式*/
+		.form{
+			font-family: serif;
+			margin-top: 10px;
+		}
+		.form label{
+			font-size: 16px;
+			font-weight: bold;
+			line-height: 38px;
+			display: inline-block;
+			width: 70px;
+			text-align: right;
+		}
+		.form input{
+			height: 33px;
+			vertical-align: top;
+			border-radius: 4px;
+			border-style: groove;
+			width: 400px;
+			margin-left: 20px;
+		}
+		.form select{
+			height: 33px;
+			vertical-align: top;
+			border-radius: 4px;
+			border-style: groove;
+			width: 200px;
+		}
+		#adress{
+			margin-left: 20px;
+		}
+		option span{
+			line-height: 30px;
+		}
+		form{
+			width: 400px;
+			text-align: left;
+			margin: 20px auto;
+			position: relative;
+		}
+		.radioForm{
+			display: inline-block;
+		}
+		.radioForm.selected .redioBtn{
+			width: 16px;
+			height: 16px;
+			background-color: #20a0ff;
+			border: 1px solid #ddd;
+			border-radius: 100%;
+			position: absolute;
+			margin-left: -18px;
+			margin-top: 2px;
+		}
+		.radioForm.selected .redioBtn:after{
+			content: "";
+			width: 6px;
+			height: 6px;
+			background-color: white;
+			border: 1px solid #ddd;
+			position: absolute;
+			margin-top: 4px;
+			margin-left: 4px;
+			border-radius: 100%;
+		}
+		.radioForm .redioBtn{
+			width: 16px;
+			height: 16px;
+			background-color: white;
+			border: 1px solid #ddd;
+			border-radius: 100%;
+			position: absolute;
+			margin-left: -18px;
+			margin-top: 2px;
+		}
+		
+	</style>
+</head>
+<body>
+	<form>
+		<div class="radioForm selected">
+			<input id="name_input" type="radio" name="status" value="1"><span class="redioBtn"></span><span>在校生</span>
+		</div>
+		<div class="radioForm">
+			<input id="name_input" type="radio" name="status" value="2"><span class="redioBtn"></span><span>非在校生</span>
+		</div>
+	</form>
+	<div class="form" id="compus">
+		<label>学校</label>
+		<select id="adress">
+			<option value="WH"><span>武汉</span></option>
+			<option value="BJ"><span>北京</span></option>
+		</select>
+		<select id="school">
+ 			<option value="hk">华中科技大学</option>
+			<option value="hn">华中农业大学</option>
+<!--			<option value="qh">清华大学</option>
+			<option value="bd">北京大学</option> -->
+		</select>
+	</div>
+	<div class="form" id="company" style="display: none;">
+		<label>就业单位</label><input id="name_input" type="text">
+	</div>
+
+	<script type="text/javascript">
+
+		$=function(id){
+			return document.getElementById(id);
+		}
+
+		function addEvent(element,event,listerner){
+			if (element.addEventListener) {
+				element.addEventListener(event,listerner,false);
+			}
+			else if (element.attachEvent) {
+                element.attachEvent('on'+event,listerner);//IE5+
+            }
+            else{
+            	element["on"+event]=listerner;
+            }
+        }
+        //切换是否在校状态
+        function selectStatus(){
+        	var selected=document.getElementsByClassName("selected");
+        	selected[0].className=selected[0].className.replace(" selected","");
+        	this.className+=" selected";
+        	if (this.innerText=="在校生") {
+        		$("compus").style.display="block";
+        		$("company").style.display="none";
+        	}
+        	else{
+        		$("compus").style.display="none";
+        		$("company").style.display="block";
+        	}
+        }
+        (function(){
+        	var radioForm=document.getElementsByClassName("radioForm");
+        	for (var i = 0; i < radioForm.length; i++) {
+        		addEvent(radioForm[i],"click",selectStatus);
+        	}
+        })();
+        var store={
+        	"WH":{"hk":"华中科技大学","hn":"华中农业大学"},
+        	"BJ":{"qh":"清华大学","bd":"北京大学"},
+        }
+        //地区与学校级联
+        function selectSchool(){
+        	//法一
+        	// switch(this.value){
+        	// 	case "WH":
+        	// 	$("school").innerHTML='<option value="hk">华中科技大学</option>\
+        	// 	<option value="hn">华中农业大学</option>'
+        	// 	break;
+        	// 	case "BJ":
+        	// 	$("school").innerHTML='<option value="qh">清华大学</option>\
+        	// 	<option value="bd">北京大学</option>';
+        	// 	break;
+        	// }
+        	//法二
+        	$("school").innerHTML="";
+        	var keys=Object.keys(store[this.value]);
+        	for (var i = 0; i < keys.length; i++) {
+        		var option=document.createElement("option");
+        		option.value=keys[i];
+        		option.innerHTML=store[this.value][keys[i]];
+        		$("school").appendChild(option);
+        	}
+        }
+        addEvent($("adress"),"change",selectSchool);
+        
+
+    </script>
+</body>
+</html>
