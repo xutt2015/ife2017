@@ -7,6 +7,11 @@
 		body{
 			background-color: white;
 		}
+		button{
+			background-color: white;
+			border-style: solid;
+			padding: 5px;
+		}
 		#window{
 			display: none;
 			position: fixed;
@@ -14,7 +19,6 @@
 			right: 0;
 			bottom: 0;
 			left: 0;
-			/*display: flex;*/
 			justify-content: center;
 			align-items: center;
 			background-color: rgba(0, 0, 0, 0.33);
@@ -23,30 +27,37 @@
 		.dialog{
 			border: 1px solid #ddd;
 			border-radius: 5px;
-			height: 400px;
+			height: 370px;
 			width: 400px;
 		}
 		.title{
 			display: flex;
-			height: 30px;
 			justify-content: space-between;
-			align-items: flex-end;
+			align-items: center;
 			color: white;
 			background-color: #20a0ff;
 			border-radius: 5px;
+			padding: 10px;
 		}
 		#close{
 			width: 20px;
 			height: 20px;
-		    /*border: 1px solid #ddd;
-		    border-radius: 10px;*/
-		    text-align: center;
+			text-align: center;
+		}
+		#contentWithBtn{
+			background-color: white;
+			height:calc(100% - 40px);
+		}
+		#content{
+			height: calc(100% - 50px);
+			padding-top: 10px;
 		}
 		.btn{
 			text-align: center;
 		}
-		.content{
-			height: 370px;
+		.btn button{
+			margin-top: 5px;
+			margin-bottom: 5px;
 		}
 	</style>
 </head>
@@ -55,29 +66,38 @@
 	<div id="window" >
 		<div class="dialog">
 			<div class="title">
-				<div>对话框标题</div>
+				<div>这是一个浮出层</div>
 				<div id="close">X</div>
 			</div>
-			<div style="background-color: white;">
-				<div class="content">对话框内容</div>
+			<div id='contentWithBtn'>
+				<div id="content">这是一个浮出层</div>
 				<div class="btn">
-					<button>确定</button>
-					<button>取消</button>
+					<button id="submit">确定</button>
+					<button id="cancel">取消</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
-		document.getElementById("start").addEventListener("click", showDialog, false);
-		document.getElementById("close").addEventListener("click", hideDialog, false);
+		$=function(id){
+			return document.getElementById(id);
+		}
 		function showDialog() {
-			var ui = document.getElementById("window");
-			ui.style.display="flex";
+			$("window").style.display="flex";
 		}
 		function hideDialog() {
-			var ui = document.getElementById("window");
-			ui.style.display="none";
+			$("window").style.display="none";
 		}
+		$("start").addEventListener("click", showDialog, false);
+		$("close").addEventListener("click", hideDialog, false);
+		$("submit").addEventListener("click", hideDialog, false);
+		$("cancel").addEventListener("click", hideDialog, false);
+		function outContentClick(event){
+			if (event.target&&event.target.id=="window") {
+				hideDialog();
+			}
+		}
+		$("window").addEventListener("click", outContentClick, false);
 	</script>
 </body>
 </html>

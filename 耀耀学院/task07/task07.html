@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>task07</title>
+	<style type="text/css">
+		table{
+			border-collapse: collapse;
+			font-size: 20px;
+			margin: auto;
+		}
+		th{
+			border: 2px #eee solid;
+			padding: 8px;
+			background-color: rgba(0, 0, 0, 0.57);
+			position: relative;
+			color: white;
+		}
+		td{
+			border: 2px #eee solid;
+			height: 40px;
+		}
+		.caret-wrapper{
+			position: relative;
+			cursor: pointer;
+			display: inline-block;
+			vertical-align: middle;
+			width: 16px;
+			height: 36px;
+			margin-top: -4px;
+		}
+		.ascending{
+			position: absolute;
+			border-bottom: 5px solid #FDFDFD;
+			border-right: 5px solid transparent;
+			border-left: 5px solid transparent;
+			top: 11px;
+		}
+		.descending{
+			position: absolute;
+			border-top: 5px solid #FDFDFD;
+			border-right: 5px solid transparent;
+			border-left: 5px solid transparent;
+			bottom: 11px;
+		}
+	</style>
+</head>
+<body> 
+	<div id="tableContainer">
+<!-- 		<table>
+			<thead>		          
+				<tr class='row0'>
+					<th class='col0' style='text-align:center;width:300px;'>姓名</th>
+					<th sortable class='col1' style='text-align:center;width:300px;'>
+						<div>语文
+							<span class="caret-wrapper">
+								<i class="ascending"></i>
+								<i class="descending"></i>
+							</span>
+						</div>
+					</th>
+					<th sortable class='col2' style='text-align:center;width:300px;'>数学</th>
+					<th sortable class='col3' style='text-align:center;width:300px;'>英语</th>
+					<th sortable class='col4' style='text-align:center;width:300px;'>总分</th>   
+				</tr>		       
+			</thead>		       
+			<tbody>
+				<tr class='row1'>
+					<td class='col0' style='text-align:center;width:300px;'>小明</td>
+					<td class='col1' style='text-align:center;width:300px;'>80</td>
+					<td class='col2' style='text-align:center;width:300px;'>90</td>
+					<td class='col3' style='text-align:center;width:300px;'>70</td>
+					<td class='col4' style='text-align:center;width:300px;'>240</td>
+				</tr>
+				<tr class='row2'>
+					<td class='col0' style='text-align:center;width:300px;'>小红</td>
+					<td class='col1' style='text-align:center;width:300px;'>90</td>
+					<td class='col2' style='text-align:center;width:300px;'>60</td>
+					<td class='col3' style='text-align:center;width:300px;'>90</td>
+					<td class='col4' style='text-align:center;width:300px;'>240</td>
+				</tr>
+				<tr class='row3'>
+					<td class='col0' style='text-align:center;width:300px;'>小亮</td>
+					<td class='col1' style='text-align:center;width:300px;'>60</td>
+					<td class='col2' style='text-align:center;width:300px;'>100</td>
+					<td class='col3' style='text-align:center;width:300px;'>70</td>
+					<td class='col4' style='text-align:center;width:300px;'>230</td>
+				</tr>
+			</tbody>		       
+		</table> -->
+	</div>
+	<script type="text/javascript">
+		$=function(id){
+			return document.getElementById(id);
+		}
+		function addEvent(element,event,listerner){
+			if (element.addEventListener) {
+				element.addEventListener(event,listerner,false);
+			}
+			else if (element.attachEvent) {
+                element.attachEvent('on'+event,listerner);//IE5+
+            }
+            else{
+            	element["on"+event]=listerner;
+            }
+        }
+    </script>
+    <script type="text/javascript" src="js/createTable.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+</body>
+</html>
