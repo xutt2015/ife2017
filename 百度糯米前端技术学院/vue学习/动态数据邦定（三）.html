@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+    var Event=(function(){
+        event={};//私有变量，防止暴露在外面
+        return{
+           register:function(attr,fn){
+               if (typeof event[attr]==='undefined') {
+                   event[attr]=[fn];
+               }
+               else{
+                   event[attr].push(fn);
+               }
+           },
+           remove:function(attr,fn){
+               if (event[attr] instanceof Array) {
+                for (let i = 0; i < event[attr].length; i++) {
+                    if (event[attr][i]===fn) {
+                        event[attr].splice(i,1);
+                    }
+                }
+            }
+        },
+        fire:function(attr,...args){
+            if (!event[attr]) return;
+            for (let i = 0; i < event[attr].length; i++) {
+                event[attr][i].call(this,...args);
+            }
+                // event[attr]&&event[attr].forEach(function(item){
+                //     item.call(this,...args);
+                // })
+            }
+        }
+    });
+    function Observer(data,eventBus) {
+        this.data=data;
+        if (!eventBus) {//给第一级new一个eventBus依次传递给子
+            this.eventBus=new Event();
+        }
+        else{
+            this.eventBus=eventBus;
+        }
+        this.walk(data,eventBus);//依次给data绑定观察事件
+    }
+    let p=Observer.prototype;
+    p.walk=function(obj,eventBus){
+        let val;
+        var _this=this;
+        if (!eventBus) {
+
+        }
+        // _this.eventBus=_this.eventBus?_this.eventBus:new Event();//只给整个对象绑定事件
+        for (let key in obj) {
+            if (obj.hasOwnProperty(key)) {//非从原型继承来的函数
+                val=obj[key];
+            }
+            if (typeof val==="object") {
+                new Observer(val,_this.eventBus);//.eventBus=_this.eventBus;//将事件传递给子
+            }
+            _this.covert(key,val);
+        }
+    }
+    p.covert=function(key,val){
+        var _this=this;
+        Object.defineProperty(this.data,key,{
+            enumerable:true,
+            configurable:true,
+            get:function(){
+                console.log("你访问了"+key);
+                return val;
+            },
+            set:function(newVal){
+                console.log("你设置了"+key);
+                console.log("新的key值为"+newVal);
+                if(val===newVal) return;
+                _this.eventBus.fire(key,val,newVal);//触发事件
+                val=newVal;
+                if (typeof newVal==="object") {
+                    new Observer(newVal);
+                }
+            }
+        });
+    }
+    p.$watch=function(attr,callback){
+        let obj=this.data[attr];
+        var _this=this;
+        _this.watchChild(obj,attr,callback);
+    }
+    p.watchChild=function(obj,attr,callback){
+        var _this=this;
+         _this.eventBus.register(attr,callback);
+        for (let key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                _this.eventBus.register(key,callback);
+                val=obj[key];
+            }
+            if (typeof val==="object") {
+                this.watchChild(val,key,callback);
+            }
+        }
+    }
+    let data={
+        name: {
+            firstName:'x',
+            lastName:'tt',
+            test:{
+                h:'1',
+                e:'2'
+            }
+        },
+        age: "24"
+    }
+    let app=new Observer(data);
+    app.$watch('name',function(oldVal,newVal){
+        console.log(newVal);
+        console.log(`我的姓名变了，可能是可能是姓氏变了，也可能是名字变了。`);
+    })
+    app.$watch('e',function(oldVal,newVal){
+        console.log(`本身变了。`);
+    })
+</script>
+</html>
+

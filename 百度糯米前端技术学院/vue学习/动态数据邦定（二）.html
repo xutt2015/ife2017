@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+    var Event=(function(){
+        var event={};//私有变量，防止暴露在外面
+        return{
+         register:function(attr,fn){
+             if (typeof event[attr]==='undefined') {
+                 event[attr]=[fn];
+             }
+             else{
+                 event[attr].push(fn);
+             }
+         },
+         remove:function(attr,fn){
+             if (event[attr] instanceof Array) {
+                for (let i = 0; i < event[attr].length; i++) {
+                    if (event[attr][i]===fn) {
+                        event[attr].splice(i,1);
+                    }
+                }
+            }
+        },
+        fire:function(attr,...args){
+            if (!event[attr]) return;
+            for (let i = 0; i < event[attr].length; i++) {
+                event[attr][i].call(this,...args);
+            }
+                // event[attr]&&event[attr].forEach(function(item){
+                //     item.call(this,...args);
+                // })
+            }
+        }
+    });
+    function Observer(data) {
+        this.data=data;
+        this.walk(data);//依次给data绑定观察事件
+    }
+    let p=Observer.prototype;
+    p.walk=function(obj){
+    	let val;
+        this.eventBus=new Event();//只给整个对象绑定事件
+    	for (let key in obj) {
+        	if (obj.hasOwnProperty(key)) {//非从原型继承来的函数
+        		val=obj[key];
+        	}
+        	if (typeof val==="object") {
+        		new Observer(val).eventBus=this.eventBus;//将事件传递给子，存在问题只能传递一级
+        	}
+        	this.covert(key,val);
+        }
+    }
+    p.covert=function(key,val){
+        var _this=this;
+    	Object.defineProperty(this.data,key,{
+    		enumerable:true,
+    		configurable:true,
+    		get:function(){
+    			console.log("你访问了"+key);
+    			return val;
+    		},
+    		set:function(newVal){
+    			console.log("你设置了"+key);
+    			console.log("新的key值为"+newVal);
+    			if(val===newVal) return;
+                _this.eventBus.fire(key,val,newVal);//触发事件
+                val=newVal;
+                if (typeof newVal==="object") {
+                    new Observer(newVal);
+                }
+            }
+        });
+    }
+    p.$watch=function(attr,callback){
+        this.eventBus.register(attr,callback);
+    }
+    let data={
+    	user: {
+    		name: "liangshaofeng",
+    		age: "24"
+    	},
+    	address: {
+    		city: "beijing"
+    	}
+    }
+    let app=new Observer(data);
+    app.$watch('age',function(oldVal,newVal){
+        console.log(`我的年龄变了，原来是: ${oldVal}岁，现在是：${newVal}岁了`);
+    })
+    app.$watch('age', function(oldVal, newVal){
+        console.log(`我的年龄真的变了诶，竟然年轻了${oldVal - newVal}岁`)
+    })
+    app.eventBus.fire('age',24,26);//触发事件
+    app.data.user.age=27;
+</script>
+</html>

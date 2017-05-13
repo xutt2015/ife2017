@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>有趣的鼠标悬浮模糊效果</title>
+	<meta charset="utf-8">
+</head>
+<style type="text/css">
+	#container{
+		position: relative;
+		margin:50px auto;
+		width:400px;
+		height:266px;
+		position: relative;
+	}
+	#container:hover img{
+		filter: blur(2px);
+		-webkit-filter: blur(2px);
+		-moz-filter: blur(2px);
+		-ms-filter: blur(2px);
+	}
+	#text{
+		position: absolute;
+		text-align: center;
+		top: 50%;
+		transform: translateY(-50%);
+		margin-left: 30px;
+		background-image: -webkit-linear-gradient(left, blue, red 25%, blue 50%, red 75%, blue 100%);/*渐变背景图*/
+		-webkit-background-clip: text;/*按font裁剪*/
+		/*-webkit-text-fill-color: transparent;*/
+		color: transparent;
+		background-size: 200% 100%;
+		animation: streamer 5s infinite linear;/*动画*/
+	}
+	@keyframes streamer {
+		0%  {
+			background-position: 0 0;
+		}
+		100% {
+			background-position: -100% 0;
+		}
+	}
+
+	#text {opacity: 0;transition: opacity 1s;}/*显示和消失效果**/
+	#container:hover #text {opacity: 1;}
+	/***动态边框***/
+	#text::before {
+		position: absolute;
+		content: '';
+		top: 0;
+		height: 136px;
+		left: 50%;
+		width: 0%;
+		transition: width 1s,left 1s;
+		border-top: 2px solid #fff;
+		border-bottom: 2px solid #fff;
+		box-sizing: border-box;/*content-box padding-box 宽高的不同计算方式*/
+	}
+	#container:hover #text::before {width: 100%; left:0;}
+	#text::after {
+		position: absolute;
+		content: '';
+		left: 0;
+		width: 320px;
+		top: 50%;
+		height: 0;
+		border-left: 2px solid #fff;
+		border-right: 2px solid #fff;
+		transition: height 1s,top 1s;
+		box-sizing: border-box;
+	}
+	#container:hover #text::after{height: 100%; top:0;}
+</style>
+<body>
+	<div id='container'>
+		<img src="../../小微学院/image/eg_tulip.jpg">
+		<div id='text'>
+			<h1>欢迎参加百度前端学院</h1>
+			<h2>点击报名</h2>
+		</div>
+	</div>
+</body>
+</html>

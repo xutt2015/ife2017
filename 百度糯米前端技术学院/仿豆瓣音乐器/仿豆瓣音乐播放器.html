@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>仿豆瓣音乐播放器</title>
+	<meta charset="utf-8">
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/app.css">
+	<!-- <style type="text/css" src='css/app.css'></style> -->
+</head>
+<body>
+	<div class="container">
+		<div id='musicList'>
+		</div>
+		<div id='musicDetail'>
+			<div id='info'>
+				<h2 id='name'></h2>
+				<h4 id='singer'></h4>
+				<div style="position: relative;">
+					<span id='playedTime'></span>
+					<div id='volumn'>
+						<i class="fa fa-volume-up"></i><!-- fa-volume-off -->
+						<div id='volumnPro'>
+							<div class="container">
+								<div class="processLen">
+								</div>
+								<div class ='ball'>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id='process'>
+					<div class="processLen">
+					</div>
+					<div class ='ball'>
+					</div>
+				</div>
+				<div id='operateRow'>
+					<div class="left">
+						<div id='heart'><i class="fa fa-heart fa-lg"></i></i></div>
+						<div id='del'><i class="fa fa-trash fa-lg"></i></div> 
+						<div id='model'><i class="fa fa-reorder fa-lg"></i></div><!-- fa-random fa-refresh  -->
+						<div><a id='download'><i class="fa  fa-download fa-lg"></i></a></div>
+					</div>
+					<div class="right">
+						<div id='pre'><i class="fa fa-step-backward fa-lg"></i></div>
+						<div id='play'><i class="fa fa-play fa-lg"></i></div><!-- <i class="fa fa-pause fa-lg"></i> -->
+						<div id='next'><i class="fa fa-step-forward fa-lg"></i></div>
+					</div>
+				</div>
+			</div>
+			<div id='pic'>
+				<img src="audios/pic.jpg">
+			</div>
+		</div>
+	</div>
+	<audio id='music' controls src=''>
+		Your browser does not support the audio element.
+	</audio>
+	<script type="text/javascript" src='js/music.js'></script>
+	<script type="text/javascript" src='js/app.js'></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>自定义网页右键菜单</title>
+	<meta charset="utf-8">
+</head>
+<style type="text/css">
+	#prompt{
+		position: relative;
+		height: 100px;
+		text-align: center;
+		background-color: #eee;
+		font-size: 24px;
+		line-height: 100px;
+	}
+	#menu{
+		position: absolute;
+		border: 1px #ddd solid;
+		box-shadow: 0px 0px 10px #aaaaaa;/*h-shadow v-shadow blur(模糊距离) spread(阴影的尺寸) color inset;*/
+		visibility: hidden;
+		background-color: white;
+	}
+	#menu ul{
+		list-style: none;
+		line-height: 40px;
+		margin-left: -30px;
+		margin-right: 10px;
+	}
+</style>
+<body>
+	<div id="prompt">right click to see the menu
+		<div id='menu'>
+			<ul>
+				<li>Menu Item1</li>
+				<li>Menu Item2</li>
+			</ul>
+		</div>
+	</div>		
+	<script type="text/javascript">
+		$=function (id) {
+			return document.getElementById(id);
+		}
+		//clientX:跟screenX相比就是将参照点改成了浏览器内容区域的左上角，该参照点会随之滚动条的移动而移动(永远指向浏览器内容区域左上角)。
+        //pageX：参照点也是浏览器内容区域的左上角，但它不会随着滚动条而变动(有滚动条时指向浏览器页面左上角)
+		$('prompt').oncontextmenu=function(event){
+			event.preventDefault();
+			var divWidth=this.clientWidth;
+			var menuWidth=$('menu').clientWidth;
+			var style=$('menu').style;
+			if (event.pageX<=(divWidth-menuWidth)) {
+	            style.left=event.pageX+'px';
+	            style.top=event.pageY+'px';
+	            style.visibility='visible';
+			}
+			else{
+				style.left=(event.pageX-menuWidth)+'px';
+	            style.top=event.pageY+'px';
+	            style.visibility='visible';
+			}
+		}
+	</script>
+</body>
+</html>

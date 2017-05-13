@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		form{
+			margin: 10px;
+		}
+		/*background-image实现*/
+		#form1 input{
+			display: none;
+		}
+		#form1 .radio label span{
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			background-image: url(image/checkbg.png);
+			background-color: white;
+			background-repeat: no-repeat;
+			background-position: -20px -6px;
+		}
+		#form1 .radio input:checked +label span{
+			background-position:-55px -6px;
+		}
+		#form1 .checkbox label span{
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			background-image: url(image/checkbg.png);
+			background-color: white;
+			background-repeat: no-repeat;
+			background-position: -20px -27px;
+		}
+		#form1 .checkbox input:checked +label span{
+			background-position:-55px -27px;
+		}
+		/*伪元素实现*/
+		#form2 input{
+			display: none;
+		}
+		#form2 .radio label:after{
+			content: '';
+			display: inline-block;
+			width: 6px;
+			height: 6px;
+			padding: 5px;
+			vertical-align: sub;
+		    margin-left: 5px;
+			border: 1px #ddd solid;
+			border-radius: 9px;
+		}
+		#form2 .radio input:checked +label:after{
+			background-clip: content-box;
+			border: 1px red solid;
+			background-color: red;
+		}
+		#form2 .checkbox label{
+			position: relative;
+		}
+		#form2 .checkbox label:after{
+			content: '';
+			display: inline-block;
+			width: 14px;
+			height: 14px;
+			vertical-align: sub;
+		    margin-left: 5px;
+			border: 1px #ddd solid;
+		}
+		#form2 .checkbox input:checked +label:after{
+			border: 1px red solid;
+		}
+		#form2 .checkbox input:checked +label:before{
+			content: '';
+		    position: absolute;
+		    display: inline-block;
+		    width: 8px;
+		    height: 6px;
+		    transform: rotateZ(-45deg);
+		    border-left: red 1px solid;
+		    border-bottom: red 1px solid;
+		    margin-left: 50px;
+		    margin-top: 8px;
+		}
+
+	</style>
+</head>
+<body>
+	<div>背景图实现</div>
+	<form id="form1">
+		<div class="radio">
+			<input type="radio" id="radio11" name="1">
+			<label for="radio11">选项1<span></span></label>			
+			<input type="radio" id="radio12" name="1">
+			<label for="radio12">选项2<span></span></label>			
+			<input type="radio" id="radio13" name="1">
+			<label for="radio13">选项3<span></span></label>
+		</div>
+		<div class="checkbox">
+			<input type="checkbox" id="checkbox11" name="2">
+			<label for="checkbox11">选项1<span></span></label>		
+			<input type="checkbox" id="checkbox12" name="2">
+			<label for="checkbox12">选项1<span></span></label>		
+			<input type="checkbox" id="checkbox13" name="2">
+			<label for="checkbox13">选项1<span></span></label>		
+		</div>
+	</form>
+	<div>伪元素实现</div>
+	<form id="form2">
+		<div class="radio">
+			<input type="radio" id="radio21" name="1">
+			<label for="radio21">选项1</label>	
+			<input type="radio" id="radio22" name="1">
+			<label for="radio22">选项1</label>	
+			<input type="radio" id="radio23" name="1">
+			<label for="radio23">选项1</label>	
+		</div>
+		<div class="checkbox">
+			<input type="checkbox" id="checkbox21" name="2">
+			<label for="checkbox21">选项1</label>		
+			<input type="checkbox" id="checkbox22" name="2">
+			<label for="checkbox22">选项1</label>		
+			<input type="checkbox" id="checkbox23" name="2">
+			<label for="checkbox23">选项1</label>		
+		</div>
+	</form>
+</body>
+</html>

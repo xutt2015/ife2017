@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>动态数据加载</title>
+</head>
+<body>
+    <div id="app">
+      <p>姓名：{{ user.name }}</p>
+      <p>年龄：{{ user.age }}</p>
+  </div>
+  <script type="text/javascript">
+    var Event=(function(){
+        event={};//私有变量，防止暴露在外面
+        return{
+           register:function(attr,fn){
+               if (typeof event[attr]==='undefined') {
+                   event[attr]=[fn];
+               }
+               else{
+                   event[attr].push(fn);
+               }
+           },
+           remove:function(attr,fn){
+               if (event[attr] instanceof Array) {
+                for (let i = 0; i < event[attr].length; i++) {
+                    if (event[attr][i]===fn) {
+                        event[attr].splice(i,1);
+                    }
+                }
+            }
+        },
+        fire:function(attr,...args){
+            if (!event[attr]) return;
+            for (let i = 0; i < event[attr].length; i++) {
+                event[attr][i].call(this,...args);
+            }
+                // event[attr]&&event[attr].forEach(function(item){
+                //     item.call(this,...args);
+                // })
+            }
+        }
+    });
+    //深度克隆
+    function cloneObject(src) {
+        var Result;
+        switch (Object.prototype.toString.call(src)) {
+            case "[object Number]":
+                Result = (typeof src === "object" ? new Number(src) : parseInt(src.toString()));
+                break;
+            case "[object String]":
+                Result = (typeof src === "object" ? new String(src) : src.toString());
+                break;
+            case "[object Boolean]":
+                Result = (typeof src === "Boolean" ? new Boolean(src) : src);
+                break;
+            case "[object Date]":
+                Result = new Date(src);
+                break;
+            case "[object Array]":
+                var temp = new Array();
+                // Array.prototype.push.apply(temp,src);
+                // 当使用for(var i=0,a;a = src[i++];) i会在a被赋值后就自动增加而不是
+                // 等到一个循环完成再增加
+                for (var i = 0, a; a = src[i]; i++) {
+                    //法一
+                    temp.push(cloneObject(a));
+                    //法二
+                    //temp[i] = cloneObject(a);
+                }
+                Result = temp;
+                delete temp;
+                break;
+            case "[object Object]":
+                var temp = {};
+                // keys 为对象src的键名字数组
+                // 它是数组！！！
+                var keys = Object.keys(src);
+                for (var i = 0, a; a = keys[i]; i++) {
+                    temp[a] = cloneObject(src[a]);
+                }
+                Result = temp;
+                delete temp;
+                delete keys;
+                break;
+            default:
+                break;
+        }
+        return Result;
+    }
+
+    function Observer(data,eventBus) {
+        this.data=data;
+        if (!eventBus) {//给第一级new一个eventBus依次传递给子
+            this.eventBus=new Event();
+        }
+        else{
+            this.eventBus=eventBus;
+        }
+        this.walk(data,eventBus);//依次给data绑定观察事件
+    }
+    let p=Observer.prototype;
+    p.walk=function(obj,eventBus){
+        let val;
+        var _this=this;
+        if (!eventBus) {
+
+        }
+        // _this.eventBus=_this.eventBus?_this.eventBus:new Event();//只给整个对象绑定事件
+        for (let key in obj) {
+            if (obj.hasOwnProperty(key)) {//非从原型继承来的函数
+                val=obj[key];
+            }
+            if (typeof val==="object") {
+                new Observer(val,_this.eventBus);//.eventBus=_this.eventBus;//将事件传递给子
+            }
+            _this.covert(key,val);
+        }
+    }
+    p.covert=function(key,val){
+        var _this=this;
+        Object.defineProperty(this.data,key,{
+            enumerable:true,
+            configurable:true,
+            get:function(){
+                return val;
+            },
+            set:function(newVal){
+                if(val===newVal) return;
+                _this.eventBus.fire(key,val,newVal);//触发事件
+                val=newVal;
+                if (typeof newVal==="object") {
+                    new Observer(newVal);
+                }
+            }
+        });
+    }
+    p.$watch=function(attr,callback){
+        let obj=this.data[attr];
+        var _this=this;
+        _this.watchChild(obj,attr,callback);
+    }
+    p.watchChild=function(obj,attr,callback){
+        var _this=this;
+         _this.eventBus.register(attr,callback);
+        for (let key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                _this.eventBus.register(key,callback);
+                val=obj[key];
+            }
+            if (typeof val==="object") {
+                this.watchChild(val,key,callback);
+            }
+        }
+    }
+
+
+    function Vue(obj){
+      this.el = obj.el;
+      this.data = obj.data;
+      this.observer=new Observer(this.data);
+      this.renderFn=this.render(this.el);
+      this.updateView(this.renderFn,this.data);
+    }
+
+    Vue.prototype.render = function(tpl){
+      var tokens = this.tokenize(document.querySelector(tpl).innerHTML);
+      var ret = [];
+      tokens.forEach(function(token){
+        if(token.type === 'text'){
+          ret.push('"' + token.expr + '"');
+        }else{
+            ret.push('data.'+ token.expr);
+        }
+      })
+      return new Function("data", "return " + ret.join('+'));
+    }
+    //解析innerHtml,并保存在tokenizeObj中
+    Vue.prototype.tokenize = function(str){
+      var openTag = '{{',
+      closeTag = '}}',
+      ret = [];
+      do {
+        var index = str.indexOf(openTag);
+        index = index === -1 ? str.length : index;
+
+        var value = str.slice(0, index).replace(/\s+/g, '');
+        ret.push({
+          expr: value,
+          type: 'text'
+        });
+
+        str = str.slice(index + openTag.length);
+        if(str){
+          index = str.indexOf(closeTag);
+          var value = str.slice(0, index).trim();
+
+          ret.push({
+            expr: value,
+            type: 'js'
+          })
+          str = str.slice(index + closeTag.length);
+        }
+      } while (str.length);
+      return ret;
+    }
+
+    Vue.prototype.updateView = function(fn,data){
+      document.querySelector(this.el).innerHTML = fn(data);
+    }
+
+    Vue.prototype.$watch = function(attr,callback){
+      this.observer.$watch(attr,callback);
+    }
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        user: {
+          name: 'xutt',
+          age: 24
+        }
+      }
+    })
+    app.$watch('name',function(oldVal,newVal){
+        let data=cloneObject(this.data);//深度克隆一个对象
+        data.user.name=newVal;
+        this.updateView(this.renderFn,data);//重新渲染界面
+    }.bind(app))
+
+</script>
+</body>
+</html>

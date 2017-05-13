@@ -1,0 +1,128 @@
+html{
+	background-color: #f9f9f9;
+}
+.container{
+	display: flex;
+	justify-content: center;
+}
+#musicList{
+	width: 400px;
+	color:#7c7b82;
+	margin-top: 20px;
+}
+ol li{
+	padding: 5px;
+	font-size: 16px;
+}
+ol li:hover{
+	color:black;
+	cursor: pointer; 
+}
+ol li.selected{
+	color:black;
+}
+#musicDetail{
+	width: 840px;
+	padding: 20px 10px 20px 30px;
+}
+#musicDetail #info{
+	width: 605px;
+	height: 200px;
+	float: left;
+}
+#musicDetail #pic{
+	float: left;
+	width: 200px;
+	height: 200px;
+	border: 1px #ddd solid;
+	border-radius: 100px;
+	overflow: hidden;
+}
+#process{
+	position: relative;
+	height: 2px;
+	background: #eee;
+	margin-top: 10px;
+}
+#process .processLen{
+	height: 100%;
+	background: #03A9F4;
+	float: left;
+}
+#process .ball{
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+	background-color: #03A9F4;
+	float: left;
+	margin-top: -4px;
+	margin-left: -5px;
+}
+#operateRow{
+	margin-top: 20px;
+}
+#operateRow div{
+	display: flex;
+}
+#operateRow .right{
+	float: right;			
+}
+#operateRow .right div{
+	margin-left: 50px;
+}
+#operateRow .left{
+	float: left;
+}
+#operateRow .left div{
+	margin-right: 50px;
+}
+.fa{
+	cursor: pointer;
+}
+a{
+	color: black;
+}
+#volumn{
+	margin-left: 10px;
+	display: inline-block;
+}
+#volumnPro{
+	/*display: flex;*/
+	display: none;
+	position: absolute;
+    width: 15px;
+    height: 50px;
+    left: 86px;
+    top: -50px;
+    justify-content: center;
+}
+#volumnPro .container{
+	height: 50px;
+	width: 2px;
+	background-color: #ddd;
+	align-items: flex-end;
+}
+#volumnPro .container .processLen{
+	height: 50px;
+	width: 2px;
+	background-color: #03A9F4;
+}
+#volumnPro .container .ball{
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+	background-color: #03A9F4;
+	position: absolute;
+	bottom: 45px;
+}
+@keyframes ratate{
+	%0{
+		transform: rotateZ(0deg);
+	}
+	100%{
+		transform: rotateZ(-360deg);
+	}    
+}
+#music{
+	display: none;
+}

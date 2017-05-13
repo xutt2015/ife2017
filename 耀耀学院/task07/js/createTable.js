@@ -80,6 +80,7 @@ var createTable = (function() {
 			}
 		}
 		//对数组进行排序
+
 		arr.sort(function(a, b) {
 			return a - b;
 		});
@@ -131,3 +132,12 @@ var createTable = (function() {
 		init: init
 	}
 })
+
+//法二，通过此方法对store排序，再重新生成body
+function asort(arr1, pro) {
+	var arr = arr1.slice(0);
+	arr.sort(function(a, b) {
+		return a[pro] - b[pro];
+	})
+	return arr;
+}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CSS3饼状loading效果</title>
+	<meta charset="utf-8">
+</head>
+<style type="text/css">
+	html, body {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+	}
+	.container{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+	}
+	.circle{
+		width: 80px;
+		height: 80px;
+		border: 2px solid #de3566;
+		border-radius: 50%;
+		border-top: 2px solid transparent;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transform: rotate(45deg);
+		animation: circle 1s linear infinite;
+	}
+	@keyframes circle{
+        0%{
+        	transform: rotate(45deg);
+        }
+        50%{
+        	transform: rotate(225deg);
+        }
+        100%{
+        	transform: rotate(405deg);
+        }
+	}
+	.wrap{
+		position: relative;
+		display: flex;
+		width: 80%;
+		height: 80%;
+		border-radius: 50%;
+		transform: rotate(-45deg);
+	}
+	.left{
+		width: 50%;
+		height: 100%;
+		overflow: hidden;/*关键*/
+		background: #ea67bb;
+		border-bottom-left-radius: 200% 100%;
+		border-top-left-radius: 200% 100%;
+	}
+	.leftInner{
+		background: #c30799; 
+		width: 100%;
+		height: 100%;
+		transform: translateX(100%);
+		transform-origin: right center;
+		border-bottom-left-radius: 200% 100%;
+		border-top-left-radius: 200% 100%;
+		animation: rotate-left 2s linear infinite;
+	}
+	.right{
+		width: 50%;
+		height: 100%;
+		overflow: hidden;/*关键*/
+		background: #ea67bb;
+		border-bottom-right-radius: 200% 100%;
+		border-top-right-radius: 200% 100%;
+	}
+	.rightInner{
+		background: #c30799; 
+		width: 100%;
+		height: 100%;
+		transform: translateX(100%);
+		transform-origin: left center;
+		border-bottom-right-radius: 200% 100%;
+		border-top-right-radius: 200% 100%;
+		animation: rotate-right 2s linear infinite;
+	}
+	@keyframes rotate-left{
+        0%{
+        	transform: rotate(0deg);
+        }
+        25%{
+        	transform: rotate(-180deg);
+        }
+        50%{
+        	transform: rotate(-180deg);
+        }
+        75%{
+        	transform: rotate(-360deg);
+        }
+        100%{
+        	transform: rotate(-360deg);
+        }
+	}
+	@keyframes rotate-right{
+        0%{
+        	transform: rotate(0deg);
+        }
+        25%{
+        	transform: rotate(0deg);
+        }
+        50%{
+        	transform: rotate(-180deg);
+        }
+        75%{
+        	transform: rotate(-180deg);
+        }
+        100%{
+        	transform: rotate(-360deg);
+        }
+	}
+</style>
+<body>
+	<div class="container">
+		<div class='circle'>
+			<div class='wrap'>
+				<div class="left">
+					<div class="leftInner"></div>
+				</div>
+				<div class="right">
+					<div class="rightInner"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

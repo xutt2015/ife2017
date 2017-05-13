@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>正则表达式之入门</title>
+	<meta charset="utf-8">
+<body>
+
+</body>
+<script type="text/javascript">
+	//匹配电话号码
+	var reg=/^1[3,4,5,8]\d{9}$/g;
+	console.log(reg.test('18812011232'));//true
+	console.log(reg.test('18812312'));//false
+	console.log(reg.test('12345678909'));//false
+
+
+	//匹配相邻重复单词   (?:^|\s)\b(\w+(?:-\w+)*)\s+\1\b(?=\s|$)
+	var reg=/\b(\w+)\s+\1\b/;//\b表示单词边界 (?:)是“非捕获型分组”
+	console.log(reg.test('foo foo bar'));//true
+	console.log(reg.test('foo bar foo'));//false
+	console.log(reg.test('foo barbar  bar'));//false
+
+	var reg=/(?:^|\s)\b(\w+(?:-\w+)*)\s+\1\b(?=\s|$)/;
+	console.log(reg.test('font-size font-size'));//true
+	console.log(reg.test('font-size font'));//false
+</script>
+</html>

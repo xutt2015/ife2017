@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <style type="text/css">
+        .a-upload
+        {
+            font-size: 14px;
+            padding: 5px 10px;
+            cursor: pointer;
+            color: black;
+            background: white;
+            border: 1px solid #ddd;
+            overflow-x: hidden;
+            display: inline;
+        }
+        .a-upload input
+        {
+            position: absolute;
+            width: 120px;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .a-upload:hover
+        {
+            color: #444;
+            background-color: #e6e6e6;
+            border-color: #ccc;
+            text-decoration: none;
+        }
+        .a-upload label{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-group" style='position: relative;'>
+        <div class="a-upload">
+            <label for="inputfile">
+                文件输入</label>
+            <input type="file" multiple="multiple" name="fileupload" id="inputfile" onchange="test()">点击这里上传附件
+        </div>
+    </div>
+</body>
+</html>        
+
