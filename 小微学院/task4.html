@@ -29,20 +29,20 @@
          	margin-top: -100px;
          }
          .c1{
-           	height: 50px;
-           	width:50px;
-           	background-color: yellow;
-           	border-bottom-right-radius: 50px;
-           }
-           .c2{
-           	height: 50px;
-           	width:50px;
-           	background-color: yellow;
-           	position: absolute;
-           	right: 0px;
-           	bottom: 0px;
-           	border-top-left-radius: 50px;
-           }
+          height: 50px;
+          width:50px;
+          background-color: yellow;
+          border-bottom-right-radius: 50px;
+        }
+        .c2{
+          height: 50px;
+          width:50px;
+          background-color: yellow;
+          position: absolute;
+          right: 0px;
+          bottom: 0px;
+          border-top-left-radius: 50px;
+        }
 		/*方案二：
 		优点：
 			1.支持跨浏览器，包括IE8-IE10.
@@ -86,37 +86,50 @@
 		   2 justify-content:center;//子元素水平居中
            3 align-items:center;//子元素垂直居中
            */
-           .div3{
-           	width: 200px;
-           	height: 200px;
-           	background-color: pink;
-           }
-       </style>
-   </head>
-   <body>
-   	<div class="content">
-   		<div class="div">
-   			<div class="c1">
-   			</div>
-   			<div class="c2">
-   			</div>
-   		</div>
-   	</div>
-   	<div class="content">
-   		<div class="div1">
+     .div3{
+     	width: 200px;
+     	height: 200px;
+     	background-color: pink;
+      /*margin: auto;  */
+      /*父元素不设置justify-content和align-items时，margin: auto可实现水平和垂直居中*/
+    }
+     .div4{
+      width: 200px;
+      height: 200px;
+      background-color: pink;
+      margin:50vh auto 0;
+      transform: translateY(-50%);
+    }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+     <div class="div">
+      <div class="c1">
+      </div>
+      <div class="c2">
+      </div>
+    </div>
+  </div>
+  <div class="content">
+   <div class="div1">
 
-   		</div>
-   	</div>
-   	<div class="content">
-   		<div class="div2">
+   </div>
+ </div>
+ <div class="content">
+   <div class="div2">
 
-   		</div>
-   	</div>
-   	<div class="content" style="justify-content:center;align-items:center;display:flex;">
-   		<div class="div3">
+   </div>
+ </div>
+ <div class="content" style="justify-content:center;align-items:center;display:flex;">
+   <div class="div3">
 
-   		</div>
-   	</div>
+   </div>
+ </div>
+ <div class="content ">
+   <div class="div4">
 
-   </body>
-   </html>
+   </div>
+ </div>
+</body>
+</html>
