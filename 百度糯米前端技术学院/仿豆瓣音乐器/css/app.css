@@ -40,9 +40,11 @@ ol li.selected{
 }
 #process{
 	position: relative;
-	height: 2px;
-	background: #eee;
-	margin-top: 10px;
+    height: 2px;
+    padding: 10px 0px;
+    background: #eee;
+    background-clip: content-box;
+    margin-top: 10px;
 }
 #process .processLen{
 	height: 100%;

@@ -17,7 +17,7 @@ var Music=(function(){
 	var playedTime=$('playedTime');//播放时间与总时间
 	var volumn=$('volumn');//声音按钮
 	var volumnPro=$('volumnPro');//声音选择器
-  var _process=$('process');//进度条
+  var process=$('process');//进度条
   var heart=$('heart');//喜爱按钮
   var del=$('del');//删除按钮
   var playModel=$('model');//播放模式
@@ -154,8 +154,28 @@ var Music=(function(){
     var left=event.layerX;
     process.getElementsByClassName('processLen')[0].style.width=left+'px';
     audio.currentTime=(left/600)*(audio.duration);
-    updateProgress()
+    updateTimeInfo();
+    updateProgress();
     event.preventDefault();
+  }
+  //进度条拖动事件
+  var ball=process.getElementsByClassName('ball')[0]
+  ball.dragtable=true;
+  ball.ondragstart=function(e){
+     e.dataTransfer.setData('x',e.clientX)
+  }
+  process.ondragover=function(e){
+    e.preventDefault();
+  }
+  process.ondrop=function(e){
+    if (e.dataTransfer.getData('x')) {
+      var width=process.getElementsByClassName('processLen')[0].style.width.replace('px','');
+      var left=Number(width)+e.clientX-e.dataTransfer.getData('x');
+      process.getElementsByClassName('processLen')[0].style.width=left+'px';
+      audio.currentTime=(left/600)*(audio.duration);
+      updateTimeInfo();
+      updateProgress();
+    }
   }
   //控制声音
   function updateVolumen(height){
