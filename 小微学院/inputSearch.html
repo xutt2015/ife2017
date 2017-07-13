@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		div{
+		    border: 1px solid #ddd;
+		    width: 173px;
+		    box-shadow: 0px 0px 1px #888888;
+		    display: none;
+		}
+		ul{
+			padding-left: 0px;
+		    margin-top: 0px;
+		    margin-bottom: 0px;
+		}
+		li{			
+		    list-style: none;
+		    padding: 5PX 10px;
+		}
+		li.selected{			
+		    background-color: #eee;
+		}
+	</style>
+</head>
+<body>
+    <input type="search" name="" placeholder="请输入城市">
+    <div>
+    	<ul>
+    	</ul>
+    </div>
+</body>
+<script type="text/javascript">
+	var city=['北京','武汉','上海','杭州','广州']
+	var div=document.getElementsByTagName('div')[0];
+	var ul=document.getElementsByTagName('ul')[0];
+	var input=document.getElementsByTagName('input')[0];
+	function initCity() {
+		div.style.display='block';
+		var value=input.value.trim();
+		var html='';
+		if (value!=='') {
+			for(let i of city){
+				if (i.indexOf(value)!==-1) {
+					 html+='<li>'+i+'</li>';
+				}
+			}
+		}
+		else{
+			for(let i of city){
+				html+='<li>'+i+'</li>';
+			}
+		}
+		ul.innerHTML=html;
+	}
+    input.oninput=initCity;
+    input.onkeydown=function(e){
+    	var select=document.getElementsByClassName('selected')[0];
+    	if (e.keyCode===40) {//down
+	    	if (select==null) {
+	    		ul.children[0].classList.toggle('selected');
+	    	}
+	    	else{
+	    		select.classList.toggle('selected');
+	    		select.nextElementSibling.classList.toggle('selected');
+	    	}
+    	}
+    	else if(e.keyCode===38){//up
+	    	if (select==null) {
+	    		ul.children[ul.children.length-1].classList.toggle('selected');
+	    	}
+	    	else{
+	    		select.classList.toggle('selected');
+	    		select.previousElementSibling.classList.toggle('selected');
+	    	}
+    	}
+    	else if(e.keyCode===13){
+    		selectValue(select);
+    	}
+    }
+    ul.onclick=function(e){
+       var target=e.target;
+       if (target&&target.tagName.toLowerCase()=='li') {
+	       	selectValue(target);
+       }
+    }
+    function selectValue(ele){
+		var value=ele.innerHTML;
+	    input.value=value;
+    	ul.innerHTML='';
+    	div.style.display='none';
+    }
+</script>
+</html>

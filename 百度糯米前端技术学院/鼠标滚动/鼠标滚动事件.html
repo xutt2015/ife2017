@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<div id='content' style="height: 800px;width:100%;background-color: #ddd;">
+</div>
+<script type="text/javascript">
+	var body=document.getElementsByTagName("body")[0];
+	body.onmousewheel=function (e) {
+		var e=e||window.event;//兼容ie
+		var moveY=0;
+		if(e.wheelDelta){//IE/Opera/Chrome
+           moveY=e.wheelDelta;
+        }else if(e.detail){//Firefox
+           moveY=e.detail;
+        }
+        //兼容ie
+        var clientHeight=window.innerHeight||document.documentElement.clientHeight;
+        var scrollingElement=document.scrollingElement||document.documentElement;
+        //在页面底部自动扩展div高度
+        if (clientHeight===(scrollingElement.scrollHeight-scrollingElement.scrollTop)&&moveY<0) {
+	        var height=Number(content.style.height.replace('px',''))+200;//每次高度增加200px
+	        content.style.height=height+'px';
+        }
+	}
+</script>
+</body>
+</html>

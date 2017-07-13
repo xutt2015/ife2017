@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.imgContainer{
+			width: 400px;
+			height: 266px;
+			border: 1px solid #ddd;
+			box-shadow: 0 0 5px #888888;
+			overflow: hidden;
+			position: relative;
+		}
+	</style>
+</head>
+<body>
+	<div class="imgContainer">
+		<!-- <image src='../../小微学院/image/eg_tulip.jpg'></image> -->
+	</div>
+</body>
+<script type="text/javascript">
+	var InitPic=(function(){
+		var img;//新建图片dom对象
+		var scale=1;//当前放缩比例
+		var left=0,top=0;//图片距离容器左边和上边的距离
+		var Width,//图片的初始宽度
+		    Height,//图片出是高度
+		    MaxScale,//图片最大比例
+		    MinScale;//图片最小比例
+		function init(ele,src,width,height,maxScale,minScale){
+			//初始化变量
+			Width=width
+			Height=height;
+			MaxScale=maxScale;
+			MinScale=minScale;
+			//生成img标签
+			img=document.createElement('img');//var img=new Image()
+			img.src=src;
+			img.dragable=true;
+			img.style.position="absolute";
+			img.style.width=width*scale+"px";
+            img.style.height=height*scale+"px";
+			ele.appendChild(img);
+			//绑定鼠标放缩事件
+			scaleEvent();
+			//绑定拖动事件
+			dragEvent(ele);			
+		}
+		//拖放事件
+		function dragEvent(ele){
+			img.ondragstart=function(e){
+               e.dataTransfer.setData('x',e.clientX);
+               e.dataTransfer.setData('y',e.clientY);
+			}
+			ele.ondragover=function(e){
+				e.preventDefault();
+			}
+			ele.ondrop=function(e){
+				var x=e.dataTransfer.getData('x');
+	            var y=e.dataTransfer.getData('y');
+	            left=e.clientX-x+Number(img.style.left.replace('px',''));
+	            top=e.clientY-y+Number(img.style.top.replace('px',''));
+	            img.style.left=left+"px";
+                img.style.top=top+"px";
+			}
+		}
+		//放缩事件
+		function scaleEvent(){
+			img.onmousewheel=function(e){
+               var e=e||window.event,
+	               detail;
+               if (e.wheelDelta) {
+               	 detail=e.wheelDelta;
+               }
+               else if(e.detail){
+               	 detail=e.detail;
+               }
+               var weight=scale;
+               if (detail>0) {
+                    scale=scale===MaxScale?MaxScale:Number((scale+0.1).toFixed(1));
+                    if (scale!==weight) {
+                    	//注意此处保证按鼠标当前所在点滚动，相当于先将（0,0）平移到当前点为基点，按基点放缩，再按比例将当前点移动到基点
+	                    left+=e.offsetX*(1-scale/weight);
+	                    top+=e.offsetY*(1-scale/weight);	                   
+	                }
+               }
+               else{
+					scale=scale===MinScale?MinScale:Number((scale-0.1).toFixed(1));
+					if (scale!==weight) {
+						left+=e.offsetX*(1-scale/weight);
+	                    top+=e.offsetY*(1-scale/weight);
+	                }
+               }
+               img.style.width=Width*scale+"px";
+               img.style.height=Height*scale+"px";
+               img.style.left=left+"px";
+               img.style.top=top+"px";
+			}
+		}
+		return {init:init};
+	});
+	var element=document.getElementsByClassName('imgContainer')[0];
+	var src="../../小微学院/image/eg_tulip.jpg";
+	var pic=new InitPic();
+	pic.init(element,src,"400","266",2,0.5);
+</script>
+</html>
