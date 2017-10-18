@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="div1">
+        <ul>
+            <li data-src="http://4493bz.1985t.com/uploads/allimg/140710/1-140G0161612.jpg"></li>
+            <li data-src="http://4493bz.1985t.com/uploads/allimg/140628/1-14062Q33R6.jpg"></li>
+            <li data-src="http://4493bz.1985t.com/uploads/allimg/140628/1-14062Q33242.jpg"></li>
+            <li data-src="http://img.bizhi.sogou.com/images/2014/12/10/997251.jpg"></li>
+            <li data-src="http://dl.bizhi.sogou.com/images/2014/12/02/986640.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170473_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170475_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170477_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+            <li data-src="http://imgstore.cdn.sogou.com/app/a/100540002/1170479_s_90_2_219x160.jpg"></li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        function setImg(index){
+            var oDiv=document.getElementById("div1")
+            var aLi=oDiv.getElementsByTagName('li');
+            if (aLi[index].children.length==0) {
+                if (aLi[index].dataset) {
+                    var src=aLi[index].dataset.src;
+                } else{
+                    var src=aLi[index].getAttribute('data-src');
+                }
+                var oImg=document.createElement('img');
+                oImg.src=src;                
+                aLi[index].appendChild(oImg); 
+            }
+        }
+        //获得对象距离视口顶端的距离  
+        function getH(obj) {  
+            return obj.getBoundingClientRect().top;  
+        } 
+        window.onscroll = function () {
+            var oDiv = document.getElementById('div1');
+            var oUl = oDiv.children[0];
+            var aLi = oUl.children;
+
+            for (var i = 0, l = aLi.length; i < l; i++) {
+                var oLi = aLi[i];
+                //检查oLi是否在可视区域
+                var t = document.documentElement.clientHeight;
+                var h = getH(oLi);
+                if (h < t) {
+                    setTimeout("setImg(" + i + ")", 500);
+                }
+            }
+        };
+        window.onload = function () {
+            window.onscroll();
+        };
+    </script>
+</body>
+</html>

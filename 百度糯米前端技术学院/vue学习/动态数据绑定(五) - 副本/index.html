@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>动态数据绑定（五）</title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <div class="wraper">
+        <article>
+            <h1>动态数据绑定（五）</h1>
+            <div id="app">
+            <p>姓名:{{name}};年龄: {{age}}</p>
+                <p>年龄: {{age}}</p>
+                <p>城市: {{address.info.city}}</p>
+                <p>{{name}}</p>
+                <p>{{age}}</p>
+                <div b-if='show'>
+                    显示
+                </div>
+            </div>
+        </article>
+        <h1>已实现的效果</h1>
+        <img src="images/实现图解1.png">
+        <img src="images/实现图解2.png">
+    </div>
+    <div style='border: 3px solid #ddd;'>
+        <h1>希望实现的效果</h1>
+        <img src="images/希望实现效果.png">
+        <p style="text-indent: 2em">从图中我们可以看到。有一个_rootBind对象，它的属性就是按照DOM模板中用到的数据层层深入排列下去的。（因为我们在模板中只用到了user.name和user.age，所以这里只有这两个属性）。而且，在每个属性上有一个_subs数组。这个数组其实就是subscibe订阅的意思，里面存放的是一系列Watcher。这些Watcher代表着当此属性数据发生改变的时候，就会循环遍历_subs里面的Watcher，执行里面的update方法。那么，Watcher又跟我们上面实现的Directive什么关系呢？是包含的关系。也就是说，Watcher是一个观察容器，它既可以装载Directive，这时候cb是更新DOM的函数，从而实现数据变动的时候更新DOM；也可以装载$watch，这时候cb是自定义的回调函数，从而实现数据变动的时候执行自定义回调函数。</p>
+    </div>
+</body>
+
+</html>
+<script src="js/ife1_6.js" type="text/javascript" charset="utf-8"></script>

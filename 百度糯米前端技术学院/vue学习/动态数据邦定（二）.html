@@ -12,7 +12,7 @@
         var event={};//私有变量，防止暴露在外面
         return{
          register:function(attr,fn){
-             if (typeof event[attr]==='undefined') {
+             if (typeof event[attr]==="undefined") {
                  event[attr]=[fn];
              }
              else{
@@ -30,12 +30,9 @@
         },
         fire:function(attr,...args){
             if (!event[attr]) return;
-            for (let i = 0; i < event[attr].length; i++) {
-                event[attr][i].call(this,...args);
-            }
-                // event[attr]&&event[attr].forEach(function(item){
-                //     item.call(this,...args);
-                // })
+                for (let i = 0; i < event[attr].length; i++) {
+                    event[attr][i].call(this,...args);
+                }
             }
         }
     });
@@ -83,7 +80,10 @@
     }
     let data={
     	user: {
-    		name: "liangshaofeng",
+    		name:{
+                firstName:'xu',
+                lastName:'tt'
+            },
     		age: "24"
     	},
     	address: {
@@ -96,6 +96,10 @@
     })
     app.$watch('age', function(oldVal, newVal){
         console.log(`我的年龄真的变了诶，竟然年轻了${oldVal - newVal}岁`)
+    })
+    //监测不到，需要改进
+    app.$watch('firstName', function(oldVal, newVal){
+        console.log(`姓氏变了`);
     })
     app.eventBus.fire('age',24,26);//触发事件
     app.data.user.age=27;

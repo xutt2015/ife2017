@@ -23,7 +23,7 @@ let uid = 0;
         writable: true,
         configurable: true
     });
-
+    this.value.$observer._directives=[];
     if (type === ARRAY) {
         //value.__proto__ = arrayAugmentations; // eslint-disable-line
         this.link(value);
@@ -73,6 +73,8 @@ let uid = 0;
                 return new Observer(newVal, ARRAY);
             } else if (typeof newVal === 'object') {
                 return new Observer(newVal, OBJECT);
+            }else{
+                 return new Observer(newVal, '');
             }
             ob.notify('set', key, newVal);
             ob.notify(`set:${key}`, key, newVal);
@@ -105,6 +107,8 @@ let uid = 0;
         return new Observer(value, ARRAY);
     } else if (typeof value === 'object') {
         return new Observer(value, OBJECT);
+    }else{
+        return new Observer(value, '');
     }
 };
 /**
@@ -283,12 +287,9 @@ p._init = function(options) {
     this.$data = options.data;
     this.$el = document.querySelector(options.el);
     // this.$template = this.$el.cloneNode(true);
-    this._directives = [];
 
     // 创建观察对象
     this.observer = this.observer.create(this.$data);
-    //bind，绑定this值。
-    this.observer.on('set', this._updateBindingAt.bind(this));//全局set
 
     // 渲染挂载
     this.$mount();
@@ -370,10 +371,24 @@ p._compileText = function(node) {
 };
 
 p._bindDirective = function(name, expression, node) {
-    let dirs = this._directives;
-    dirs.push(
-        new Directive(name, node, this, expression)
+    // let dirs = this._directives;
+    // dirs.push(
+    //     new Directive(name, node, this, expression)
+    // );
+    var propertyNames = this.expression.split(".");
+    if (propertyNames===1) {
+        var dirs = this.observer;
+        var obs = this.observer;
+        while(propertyNames>0){
+            obs=dirs.value[propertyNames].$observer;
+            dirs=dirs.value[propertyNames].$observer._directives;
+        }
+        dirs.push(
+            new Directive(name, node, this, expression)
         );
+    }
+    //bind，绑定this值。
+    obs.on('set', this._updateBindingAt.bind(obs));
 };
 
 const app = new Bue({

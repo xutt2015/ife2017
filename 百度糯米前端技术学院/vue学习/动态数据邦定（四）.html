@@ -43,50 +43,7 @@
     });
     //深度克隆
     function cloneObject(src) {
-        var Result;
-        switch (Object.prototype.toString.call(src)) {
-            case "[object Number]":
-                Result = (typeof src === "object" ? new Number(src) : parseInt(src.toString()));
-                break;
-            case "[object String]":
-                Result = (typeof src === "object" ? new String(src) : src.toString());
-                break;
-            case "[object Boolean]":
-                Result = (typeof src === "Boolean" ? new Boolean(src) : src);
-                break;
-            case "[object Date]":
-                Result = new Date(src);
-                break;
-            case "[object Array]":
-                var temp = new Array();
-                // Array.prototype.push.apply(temp,src);
-                // 当使用for(var i=0,a;a = src[i++];) i会在a被赋值后就自动增加而不是
-                // 等到一个循环完成再增加
-                for (var i = 0, a; a = src[i]; i++) {
-                    //法一
-                    temp.push(cloneObject(a));
-                    //法二
-                    //temp[i] = cloneObject(a);
-                }
-                Result = temp;
-                delete temp;
-                break;
-            case "[object Object]":
-                var temp = {};
-                // keys 为对象src的键名字数组
-                // 它是数组！！！
-                var keys = Object.keys(src);
-                for (var i = 0, a; a = keys[i]; i++) {
-                    temp[a] = cloneObject(src[a]);
-                }
-                Result = temp;
-                delete temp;
-                delete keys;
-                break;
-            default:
-                break;
-        }
-        return Result;
+        return JSON.parse(JSON.stringify(src));
     }
 
     function Observer(data,eventBus) {

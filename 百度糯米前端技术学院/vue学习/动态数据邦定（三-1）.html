@@ -37,21 +37,19 @@
 
     function Observer(data,eventBus) {
         this.data=data;
-        if (!eventBus) {//给第一级new一个eventBus依次传递给子
-            this.eventBus=new Event();
-        }
-        else{
-            this.eventBus=eventBus;
-        }
+        this.eventBus=new Event();
+        // if (!eventBus) {//给第一级new一个eventBus依次传递给子
+        //     this.eventBus=new Event();
+        // }
+        // else{
+        //     this.eventBus=eventBus;
+        // }
         this.walk(data,eventBus);//依次给data绑定观察事件
     }
     let p=Observer.prototype;
     p.walk=function(obj,eventBus){
         let val;
         var _this=this;
-        if (!eventBus) {
-
-        }
         // _this.eventBus=_this.eventBus?_this.eventBus:new Event();//只给整个对象绑定事件
         for (let key in obj) {
             if (obj.hasOwnProperty(key)) {//非从原型继承来的函数

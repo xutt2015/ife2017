@@ -153,7 +153,7 @@
 	     function passwordRetryVerify(){
 	     	var str=$('passwordRetry_input').value;
 	     	var div=$('passwordRetry_input').parentElement.nextElementSibling;
-	     	if(str==$('password_input').value){
+	     	if(str==$('password_input').value&&str!=''){
 	     		div.children[0].innerText="两次输入密码一致";
 	     		div.children[0].style.color='green';
 	     		$('passwordRetry_input').style.borderColor='green';
